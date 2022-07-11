@@ -12,6 +12,8 @@ func _ready() -> void:
 	disk.speed = speed
 	$Disks.add_child(disk)
 	disk.global_transform.origin = $DiskSpawnPosition.global_transform.origin
+	
+	Game.symmetrizer = $Symmetrizer
 
 
 func _on_SpawnDiskTimer_timeout() -> void:
