@@ -51,5 +51,5 @@ shader_param/uv2_offset = Vector3( 0, 0, 0 )
 shader_param/scroll_speed = 12.0
 shader_param/tunnel_length = 527.19
 shader_param/scroll_direction = Vector2( 0, 1 )
-shader_param/scrolling_enabled = true
+shader_param/scrolling_enabled = false
 shader_param/texture_albedo = ExtResource( 1 )
