@@ -1,3 +1,9 @@
 [gd_scene format=2]
 
 [node name="Level" type="Spatial"]
+
+[node name="Tunnel" type="Spatial" parent="."]
+
+[node name="Sphere" type="Spatial" parent="."]
+
+[node name="WorldEnvironment" type="WorldEnvironment" parent="."]
