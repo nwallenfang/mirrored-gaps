@@ -7,10 +7,8 @@ const DISK = preload("res://Objects/Disk.tscn")
 func _ready() -> void:
 	$Tunnel.get_node("Mesh").get_active_material(0).set("shader_param/scroll_speed", speed)
 	
-	
+	Game.symmetrizer = $Symmetrizer	
 	spawn_disk()
-	
-	Game.symmetrizer = $Symmetrizer
 
 func spawn_disk():
 	var disk = DISK.instance()
