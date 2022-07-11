@@ -11,7 +11,12 @@ config_version=4
 [application]
 
 config/name="Symmetry Gap"
+run/main_scene="res://Logic/Level.tscn"
 config/icon="res://icon.png"
+
+[autoload]
+
+Game="*res://Logic/Game.tscn"
 
 [gui]
 
@@ -26,4 +31,5 @@ common/enable_pause_aware_picking=true
 quality/driver/driver_name="GLES2"
 vram_compression/import_etc=true
 vram_compression/import_etc2=false
+quality/filters/use_fxaa=true
 environment/default_environment="res://default_env.tres"
