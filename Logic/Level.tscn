@@ -10,15 +10,17 @@ ambient_light_color = Color( 1, 1, 1, 1 )
 fog_enabled = true
 fog_color = Color( 0.321569, 0.321569, 0.321569, 1 )
 fog_sun_color = Color( 0, 0, 0, 1 )
-fog_depth_end = 180.0
+fog_depth_end = 175.6
+fog_depth_curve = 2.0
 dof_blur_far_distance = 90.66
 
 [node name="Level" type="Spatial"]
 
 [node name="Tunnel" parent="." instance=ExtResource( 2 )]
+transform = Transform( 1, 0, 0, 0, 1, 0, 0, 0, 1, 0, 0, 137.291 )
 
 [node name="Sphere" parent="." instance=ExtResource( 1 )]
-transform = Transform( 1, 0, 0, 0, 1, 0, 0, 0, 1, 0, -12.9129, -116.136 )
+transform = Transform( 1, 0, 0, 0, 1, 0, 0, 0, 1, 0, -8.04782, -107.651 )
 
 [node name="Pivot" type="Spatial" parent="Sphere"]
 transform = Transform( 1, 0, 0, 0, 0.866025, -0.5, 0, 0.5, 0.866025, 0, 0, 0 )
@@ -27,7 +29,6 @@ transform = Transform( 1, 0, 0, 0, 0.866025, -0.5, 0, 0.5, 0.866025, 0, 0, 0 )
 environment = SubResource( 1 )
 
 [node name="Camera" type="Camera" parent="."]
-transform = Transform( -1, -1.77636e-15, -8.74228e-08, -3.11371e-08, 0.934422, 0.356167, 8.16898e-08, 0.356167, -0.934422, 0, -5.72552, -123.479 )
+transform = Transform( -1, 0, 8.74228e-08, 0, 1, 0, -8.74228e-08, 0, -1, 0, 0, -123.479 )
 current = true
-fov = 100.0
 far = 200.0
