@@ -1,6 +1,6 @@
 extends Spatial
 
-export var speed = 80.0  # meter / second
+export var speed = 10.0  # meter / second
 
 const DISK = preload("res://Objects/Disk.tscn")
 
