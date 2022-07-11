@@ -13,9 +13,9 @@ func set_image(im: Image):
 	var texture = ImageTexture.new()
 	texture.create_from_image(im)
 	$Sprite3D.texture = texture
-
+	$Sprite3D.material_override.set("shader_param/texture_albedo", texture)
 
 func discard():
 	# TODO blend out
-	yield(get_tree().create_timer(0.5), "timeout")
+	yield(get_tree().create_timer(5.5), "timeout")
 	queue_free()
