@@ -51,6 +51,7 @@ func symmetrize_done(result):
 
 var cursor_speed_pixels := 300.0
 var cursor_speed_rotation_degrees := 90.0
+var cursor_max_distance := 10.0
 func _physics_process(delta):
 	if selected_disk != null:
 		self.global_transform.origin = selected_disk.global_transform.origin + Vector3(0.0, 0.0, -.5)
@@ -66,6 +67,8 @@ func _physics_process(delta):
 		$Cursor.rotation_degrees.z += cursor_speed_rotation_degrees * delta
 	if Input.is_action_pressed("cursor_rotate_counter"):
 		$Cursor.rotation_degrees.z -= cursor_speed_rotation_degrees * delta
+	if $Cursor.translation.length() > cursor_max_distance:
+		$Cursor.translation *= cursor_max_distance / $Cursor.translation.length()
 	if Input.is_action_just_pressed("symmetrize"):
 		# TODO only call calc_symm if there isn't an ongoing calc_symm at the moment
 		if not currently_symmetrizing:

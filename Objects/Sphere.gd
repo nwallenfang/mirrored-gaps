@@ -9,3 +9,11 @@ extends Spatial
 # Called when the node enters the scene tree for the first time.
 func _ready() -> void:
 	$Animation.play("Roll")
+
+func destroy_animation():
+	$Mesh.visible = false
+	$Particles.emitting = true
+
+func reset_destruction():
+	$Mesh.visible = true
+	$Particles.emmitting = false

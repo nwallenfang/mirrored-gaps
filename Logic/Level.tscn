@@ -51,11 +51,28 @@ transform = Transform( 1, 0, 0, 0, 1, 0, 0, 0, 1, 0, 0, 53.6764 )
 [node name="Symmetrizer" parent="." instance=ExtResource( 4 )]
 
 [node name="DiskDetectionArea" type="Area" parent="."]
-transform = Transform( 1, 0, 0, 0, 1, 0, 0, 0, 1, 0, 0, -93.2323 )
+transform = Transform( 1, 0, 0, 0, 1, 0, 0, 0, 1, 0, 0, -97.5275 )
 
 [node name="CollisionShape" type="CollisionShape" parent="DiskDetectionArea"]
 transform = Transform( 10.924, 0, 0, 0, -4.77502e-07, -10.924, 0, 1.08525, -4.74379e-08, 0, 0, 0 )
 shape = SubResource( 2 )
+
+[node name="Tween" type="Tween" parent="."]
+
+[node name="WinText" type="Spatial" parent="."]
+transform = Transform( 1, 0, 0, 0, 1, 0, 0, 0, 1, 0, 0, -92.1351 )
+visible = false
+
+[node name="Label3D" type="Label3D" parent="WinText"]
+transform = Transform( -1, 0, -8.74228e-08, 0, 1, 0, 8.74228e-08, 0, -1, 0, 2.55295, 0 )
+pixel_size = 0.2
+text = "You did it!"
+
+[node name="Label3D2" type="Label3D" parent="WinText"]
+transform = Transform( -1, 0, -8.74228e-08, 0, 1, 0, 8.74228e-08, 0, -1, 0, -1.14071, 0 )
+pixel_size = 0.1
+text = "You may now close the game
+or roll forever."
 
 [connection signal="timeout" from="SpawnDiskTimer" to="." method="_on_SpawnDiskTimer_timeout"]
 [connection signal="area_entered" from="DiskDetectionArea" to="." method="_on_DiskDetectionArea_area_entered"]

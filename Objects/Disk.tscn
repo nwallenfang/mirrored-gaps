@@ -39,6 +39,7 @@ void fragment() {
 "
 
 [sub_resource type="ShaderMaterial" id=4]
+resource_local_to_scene = true
 shader = SubResource( 3 )
 shader_param/albedo = Color( 1, 1, 1, 1 )
 shader_param/specular = 0.5
@@ -68,3 +69,5 @@ texture = ExtResource( 3 )
 [node name="CollisionShape" type="CollisionShape" parent="Hitbox"]
 transform = Transform( 13.8502, 0, 0, 0, 13.8502, 0, 0, 0, 2.68514, 0, 0, 0 )
 shape = SubResource( 2 )
+
+[node name="Tween" type="Tween" parent="."]
