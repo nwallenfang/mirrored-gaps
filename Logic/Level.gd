@@ -3,10 +3,12 @@ extends Spatial
 #export var speed = 12.0  # meter / second
 
 const DISK = preload("res://Objects/Disk.tscn")
+const TUTORIAL = preload("res://Objects/Tutorial.tscn")
 
 func _ready() -> void:
 	Game.tunnel = $Tunnel
-	Game.symmetrizer = $Symmetrizer	
+	Game.symmetrizer = $Symmetrizer
+	Game.ui = $UI
 	spawn_disk()
 
 var tunnel_dist = 0.0
@@ -23,6 +25,9 @@ func spawn_disk():
 	Game.disk_number += 1
 	$Disks.add_child(disk)
 	disk.global_transform.origin = $DiskSpawnPosition.global_transform.origin
+	if disk.number in Game.tutorials:
+		var tutorial = TUTORIAL.instance()
+		tutorial.initialize(disk, Game.tutorials[disk.number])
 	if Game.current_disk == null:
 		Game.current_disk = disk
 		if $UI.levels_done == 0:
@@ -62,4 +67,6 @@ func _on_DiskDetectionArea_area_entered(area:Area) -> void:
 			$WinText.visible = true
 			$Symmetrizer.selected_disk = null
 			$Symmetrizer.global_transform.origin.z = $WinText.global_transform.origin.z + 1
+			Game.can_rotate = true
+			Game.can_move = true
 
