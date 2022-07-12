@@ -24,9 +24,7 @@ func set_image(im):
 
 func load_disk_from_file(disk_number):
 	var file_name = "res://Disks/" + str(disk_number) + ".png"
-	print(file_name)
 	var image_loaded = load(file_name)
-	print(image_loaded)
 	set_image(image_loaded)
 
 func discard():

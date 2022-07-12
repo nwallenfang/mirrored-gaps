@@ -28,6 +28,14 @@ config/icon="res://icon.png"
 
 Game="*res://Logic/Game.tscn"
 
+[debug]
+
+gdscript/warnings/unused_variable=false
+gdscript/warnings/unused_argument=false
+gdscript/warnings/unused_signal=false
+gdscript/warnings/return_value_discarded=false
+gdscript/warnings/integer_division=false
+
 [gui]
 
 common/drop_mouse_on_gui_input_disabled=true

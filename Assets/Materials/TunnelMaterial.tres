@@ -22,6 +22,7 @@ uniform float scroll_speed = 5.0;  // m/s
 uniform float tunnel_length = 527.19;
 uniform vec2 scroll_direction = vec2(0.0, 1.0);
 uniform bool scrolling_enabled = true;
+uniform float distance = 0.0;
 
 void vertex() {
 	UV=UV*uv1_scale.xy+uv1_offset.xy;
@@ -31,7 +32,8 @@ void vertex() {
 
 
 void fragment() {
-	vec2 movement = float(scrolling_enabled) * TIME * scroll_speed*uv1_scale.y/2.0/tunnel_length * scroll_direction;
+	//vec2 movement = float(scrolling_enabled) * TIME * scroll_speed*uv1_scale.y/2.0/tunnel_length * scroll_direction;
+	vec2 movement = float(scrolling_enabled) * distance *uv1_scale.y/2.0/tunnel_length * scroll_direction;
 	vec4 albedo_tex = texture(texture_albedo, UV + movement);
 	ALBEDO = albedo.rgb * albedo_tex.rgb;
 }
@@ -52,4 +54,5 @@ shader_param/scroll_speed = 12.0
 shader_param/tunnel_length = 527.19
 shader_param/scroll_direction = Vector2( 0, 1 )
 shader_param/scrolling_enabled = false
+shader_param/distance = 0.0
 shader_param/texture_albedo = ExtResource( 1 )

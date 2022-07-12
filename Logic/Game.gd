@@ -11,12 +11,9 @@ var current_disk : Disk setget set_current_disk
 var symmetrizer
 var tunnel
 
-var speed := 12.0 setget set_speed# meter / second
-
-func set_speed(s):
-	speed = s
-	if tunnel != null:
-		tunnel.get_node("Mesh").get_active_material(0).set("shader_param/scroll_speed", speed)
+var speed := 12.0 # meter / second
+var start_speed := 12.0
+var accel := .7
 
 func _ready() -> void:
 	pass 

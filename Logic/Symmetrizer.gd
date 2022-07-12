@@ -71,7 +71,7 @@ func _physics_process(delta):
 		$Cursor.translation *= cursor_max_distance / $Cursor.translation.length()
 	if Input.is_action_just_pressed("symmetrize"):
 		# TODO only call calc_symm if there isn't an ongoing calc_symm at the moment
-		if not currently_symmetrizing:
+		if (not currently_symmetrizing) and is_instance_valid(selected_disk):
 			var cursor_position_pixel = Vector2.ONE * Game.image_res * .5 + Vector2(-$Cursor.translation.x, -$Cursor.translation.y) / Game.meter_per_pixel
 			var cursor_rotation_radians = deg2rad($Cursor.rotation_degrees.z)
 			var image = selected_disk.get_image()
