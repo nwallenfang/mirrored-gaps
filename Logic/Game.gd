@@ -21,7 +21,7 @@ var tutorials := {
 	2: "Press Q/E\nto rotate the axis",
 	4: "Another Tutorial Text",
 	9: "Press WASD\nto move the axis",
-	13: "Sometimes you need to\nsymmetrize more than once"
+	13: "Sometimes you need\nto symmetrize\nmore than once"
 }
 
 var level_data_dict := { #symm count, can_rotate, can_move, cursor_reset_location, cursor_reset_rotation
