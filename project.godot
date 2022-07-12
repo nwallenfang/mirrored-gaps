@@ -13,9 +13,15 @@ _global_script_classes=[ {
 "class": "Disk",
 "language": "GDScript",
 "path": "res://Objects/Disk.gd"
+}, {
+"base": "CanvasLayer",
+"class": "Fade",
+"language": "GDScript",
+"path": "res://addons/UniversalFade/Fade.gd"
 } ]
 _global_script_class_icons={
-"Disk": ""
+"Disk": "",
+"Fade": ""
 }
 
 [application]
