@@ -1,10 +1,11 @@
-[gd_scene load_steps=8 format=2]
+[gd_scene load_steps=9 format=2]
 
 [ext_resource path="res://Objects/Sphere.tscn" type="PackedScene" id=1]
 [ext_resource path="res://Objects/Tunnel.tscn" type="PackedScene" id=2]
 [ext_resource path="res://Logic/Level.gd" type="Script" id=3]
 [ext_resource path="res://Logic/Symmetrizer.tscn" type="PackedScene" id=4]
 [ext_resource path="res://UI/UI.tscn" type="PackedScene" id=5]
+[ext_resource path="res://UI/ui_font.tres" type="DynamicFont" id=6]
 
 [sub_resource type="Environment" id=1]
 background_mode = 1
@@ -62,14 +63,16 @@ visible = false
 
 [node name="Label3D" type="Label3D" parent="WinText"]
 transform = Transform( -1, 0, -8.74228e-08, 0, 1, 0, 8.74228e-08, 0, -1, 0, 2.55295, 0 )
-pixel_size = 0.2
+pixel_size = 0.02
 text = "You did it!"
+font = ExtResource( 6 )
 
 [node name="Label3D2" type="Label3D" parent="WinText"]
-transform = Transform( -1, 0, -8.74228e-08, 0, 1, 0, 8.74228e-08, 0, -1, 0, -1.14071, 0 )
-pixel_size = 0.1
-text = "You may now close the game
-or roll forever."
+transform = Transform( -1, 0, -8.74228e-08, 0, 1, 0, 8.74228e-08, 0, -1, -0.0416422, -1.14071, 0 )
+text = "
+You may now close the game
+or roll on forever."
+font = ExtResource( 6 )
 
 [node name="UI" parent="." instance=ExtResource( 5 )]
 

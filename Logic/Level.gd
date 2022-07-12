@@ -16,8 +16,7 @@ var next_spawn := 0.0
 var tunnel_dist = 0.0
 func _process(delta):
 	tunnel_dist += delta * Game.speed
-	$UI.get_node("Dist").text = str(tunnel_dist)
-	$Tunnel.get_node("Mesh").get_active_material(0).set("shader_param/distance", tunnel_dist)
+	$Tunnel.get_node("Mesh").get_active_material(0).set("shader_param/distance_travelled", tunnel_dist)
 	Game.speed += delta * Game.accel
 	if tunnel_dist > next_spawn:
 		next_spawn += spawn_dist
