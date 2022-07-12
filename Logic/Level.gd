@@ -70,3 +70,5 @@ func _on_DiskDetectionArea_area_entered(area:Area) -> void:
 			Game.can_rotate = true
 			Game.can_move = true
 
+func _on_AutoSymmArea_area_entered(area):
+	pass # Replace with function body.
