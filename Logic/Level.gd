@@ -60,7 +60,7 @@ func sphere_passed(disk):
 		print('no new disk to set')
 		Game.current_disk = null
 	else:
-		Game.current_disk = $Disks.get_child(1)
+		Game.current_disk = $Disks.get_node("Disk" + str(disk.number + 1))#$Disks.get_child(1)
 	$UI.set_levels_done(disk.number)
 	if disk.number == Game.level_count:
 		$WinText.visible = true

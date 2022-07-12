@@ -15,9 +15,9 @@ var ui
 var speed := 12.0 # meter / second
 var speed_backup := -1.0
 var start_speed := 12.0
-var accel := .7
+var accel := 0.0#.7
 
-var speedup_speed = 90.0
+var speedup_speed = 50.0
 var speedup_active = false setget set_speedup_active
 
 var tutorials := {
@@ -84,14 +84,14 @@ func set_speedup_active(active: bool):
 	if active != speedup_active:
 		if active:
 			speed_backup = Game.speed
-			print($Tween)
-			$Tween.reset_all()
-			$Tween.interpolate_property(self, "speed", speed, speedup_speed, 0.7)
+			#print($Tween)
+			$Tween.remove_all()
+			$Tween.interpolate_property(self, "speed", speed, speedup_speed, 1.7)
 			$Tween.start()
 	#		speed = Game.speedup_speed
 		else:
-			$Tween.reset_all()
-			$Tween.interpolate_property(self, "speed", speed, speed_backup, 0.3)
+			$Tween.remove_all()
+			$Tween.interpolate_property(self, "speed", speed, start_speed, 0.8)
 			$Tween.start()
 	#		speed = Game.speed_backup
 
