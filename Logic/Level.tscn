@@ -40,10 +40,6 @@ transform = Transform( -1, 0, 8.74228e-08, 0, 1, 0, -8.74228e-08, 0, -1, 0, 0, -
 current = true
 far = 200.0
 
-[node name="SpawnDiskTimer" type="Timer" parent="."]
-wait_time = 8.0
-autostart = true
-
 [node name="Disks" type="Node" parent="."]
 
 [node name="DiskSpawnPosition" type="Position3D" parent="."]
@@ -77,5 +73,4 @@ or roll forever."
 
 [node name="UI" parent="." instance=ExtResource( 5 )]
 
-[connection signal="timeout" from="SpawnDiskTimer" to="." method="_on_SpawnDiskTimer_timeout"]
 [connection signal="area_entered" from="DiskDetectionArea" to="." method="_on_DiskDetectionArea_area_entered"]

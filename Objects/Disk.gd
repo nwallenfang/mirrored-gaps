@@ -31,7 +31,7 @@ func discard():
 	#yield(get_tree().create_timer(1), "timeout")
 	$Tween.interpolate_property($Sprite3D.material_override, "shader_param/albedo", Color.white, Color.transparent, 1.5)
 	$Tween.start()
-	yield(get_tree().create_timer(1.5), "timeout")
+	yield(get_tree().create_timer(3.5), "timeout")
 	queue_free()
 
 var cross_origin := Vector2(256, 480)
