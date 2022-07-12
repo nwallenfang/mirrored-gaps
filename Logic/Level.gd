@@ -10,7 +10,6 @@ func _ready() -> void:
 	Game.symmetrizer = $Symmetrizer
 	Game.ui = $UI
 	Game.speed = Game.start_speed
-	#spawn_disk()
 
 var spawn_dist := 140.0
 var next_spawn := 0.0
