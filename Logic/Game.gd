@@ -13,8 +13,12 @@ var tunnel
 var ui
 
 var speed := 12.0 # meter / second
+var speed_backup := -1.0
 var start_speed := 12.0
 var accel := .7
+
+var speedup_speed = 90.0
+var speedup_active = false setget set_speedup_active
 
 var tutorials := {
 	1: "Press SPACE\nto create symmetry",
@@ -57,9 +61,9 @@ func set_available_symms(x):
 	if x == 0:
 		can_move = false
 		can_rotate = false
-
-func _ready() -> void:
-	pass 
+		self.speedup_active = true
+	else:
+		self.speedup_active = false
 
 func set_current_disk(disk: Disk):
 	current_disk = disk
@@ -76,3 +80,21 @@ func set_current_disk(disk: Disk):
 	if level_data[4] != null:
 		symmetrizer.cursor.rotation_degrees.z = level_data[4]
 		
+func set_speedup_active(active: bool):
+	if active != speedup_active:
+		if active:
+			speed_backup = Game.speed
+			print($Tween)
+			$Tween.reset_all()
+			$Tween.interpolate_property(self, "speed", speed, speedup_speed, 0.7)
+			$Tween.start()
+	#		speed = Game.speedup_speed
+		else:
+			$Tween.reset_all()
+			$Tween.interpolate_property(self, "speed", speed, speed_backup, 0.3)
+			$Tween.start()
+	#		speed = Game.speed_backup
+
+	speedup_active = active
+	
+	

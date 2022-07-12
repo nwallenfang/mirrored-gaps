@@ -18,7 +18,8 @@ uniform vec2 scroll_direction = vec2(0.0, 1.0);
 uniform bool scrolling_enabled = true;
 uniform float distance_travelled = 0.0;
 
-uniform float scanline_period = 5.5;
+uniform bool emit_rings = true;
+uniform float scanline_speed = 40;
 uniform float scanline_width : hint_range(0, 0.49) = 0.001;
 uniform float scanline_intensity = 0.35;
 uniform vec4 scanline_color1: hint_color;
@@ -28,6 +29,7 @@ uniform vec4 floor_color: hint_color;
 
 const float PI = 3.141;
 
+varying vec2 scaled_uv;
 
 vec2 grid(vec2 uv, float columns, float rows){
 	return fract(vec2(uv.x * columns, uv.y * rows));
@@ -42,47 +44,43 @@ vec3 add_ring(vec2 uv) {
 	float speed_meter_p_second = 40.0;
 	float tunnel_segment_length = tunnel_length/number_of_rings;
 	float uv_offset = mod(distance_travelled*uv1_scale.y/speed_meter_p_second, 2.0) - 1.0; // * scanline_period // tunnel_length/2.0
-//	float uv_offset = mod(TIME*uv1_scale.y/2.0, 2.0) - 1.0;
 
-//	uv_offset = mod(-TIME * 1.0/period *2.0, 2.0) - 1.0;
 	float scanline = smoothstep(0.5 - scanline_width, 0.5, grid_uv.y + 0.5 * uv_offset) 
 			* (1.0 - smoothstep(0.5, 0.5 + scanline_width, grid_uv.y + 0.5 *uv_offset)) * 1.0;//* pattern.r;
-	
-	// ein Kreis  UV.x > 0.5 && UV.y > 0.5
-	// der andere UV.x < 0.5 && UV.y > 0.5
+
 	
 	vec3 scanline_color = clamp(scanline_color2.rgb + (vec3(1.0) * 0.5 * uv_offset), 0.0, 1.0);
 	
 	return scanline * scanline_intensity * scanline_color.rgb;
 }
 
-void vertex() {}
+void vertex() {
+	scaled_uv = UV.xy * uv1_scale.xy;
+}
 
 void fragment() {
-	//vec2 movement = float(scrolling_enabled) * TIME * scroll_speed*uv1_scale.y/2.0/tunnel_length * scroll_direction;
 	vec2 movement = float(scrolling_enabled) * distance_travelled *uv1_scale.y/2.0/tunnel_length * scroll_direction;
-	vec4 albedo_tex = texture(texture_albedo, UV + movement);
-//	ALBEDO = albedo.rgb * albedo_tex.rgb;
-
+	vec4 albedo_tex = texture(texture_albedo, scaled_uv + movement);
 	float is_on_floor = float(UV.x > 0.45 && UV.x < 0.55);
 	vec3 ring = add_ring(UV);
+	
 	ALBEDO = is_on_floor * floor_color.rgb + 
 			 (1.0-is_on_floor) * (albedo.rgb * albedo_tex.rgb + ring);
-//	EMISSION = is_on_floor * ring;
 }
 "
 
 [resource]
 shader = SubResource( 2 )
 shader_param/albedo = Color( 1, 1, 1, 1 )
-shader_param/uv1_scale = Vector3( 1, 1, 1 )
+shader_param/uv1_scale = Vector3( 5, 5, 5 )
 shader_param/uv1_offset = Vector3( 0, 0.5, 0 )
 shader_param/scroll_speed = 12.0
 shader_param/tunnel_length = 527.19
 shader_param/scroll_direction = Vector2( 0, 1 )
 shader_param/scrolling_enabled = true
 shader_param/distance_travelled = 0.0
-shader_param/scanline_period = 5.5
+shader_param/emit_rings = true
+shader_param/scanline_speed = 40.0
 shader_param/scanline_width = 0.005
 shader_param/scanline_intensity = 0.35
 shader_param/scanline_color1 = Color( 0.85098, 0, 1, 1 )

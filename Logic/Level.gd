@@ -1,6 +1,5 @@
 extends Spatial
 
-#export var speed = 12.0  # meter / second
 
 const DISK = preload("res://Objects/Disk.tscn")
 const TUTORIAL = preload("res://Objects/Tutorial.tscn")
@@ -17,7 +16,8 @@ var tunnel_dist = 0.0
 func _process(delta):
 	tunnel_dist += delta * Game.speed
 	$Tunnel.get_node("Mesh").get_active_material(0).set("shader_param/distance_travelled", tunnel_dist)
-	Game.speed += delta * Game.accel
+	if not Game.speedup_active:
+		Game.speed += delta * Game.accel
 	if tunnel_dist > next_spawn:
 		next_spawn += spawn_dist
 		spawn_disk()
@@ -40,6 +40,36 @@ func spawn_disk():
 		if $UI.levels_done == 0:
 			$UI.set_levels_done(disk.number-1)
 
+
+func sphere_collided(disk):
+	var killer_disk_number = disk.number
+	$Sphere.destroy_animation()
+	$Tween.interpolate_property(Game, "speed", Game.speed, 0.0, 2.0)
+	$Tween.start()
+
+	yield(get_tree().create_timer(2.0),"timeout")
+	Game.disk_number = killer_disk_number
+	Game.current_disk = null
+	
+	yield(Fade.fade_out(0.3), "finished")
+	get_tree().change_scene("res://Logic/Level.tscn")
+	Fade.fade_in(0.2)
+	
+func sphere_passed(disk):
+	if $Disks.get_child_count() == 1:
+		print('no new disk to set')
+		Game.current_disk = null
+	else:
+		Game.current_disk = $Disks.get_child(1)
+	$UI.set_levels_done(disk.number)
+	if disk.number == Game.level_count:
+		$WinText.visible = true
+		$Symmetrizer.selected_disk = null
+		$Symmetrizer.global_transform.origin.z = $WinText.global_transform.origin.z + 1
+		Game.can_rotate = true
+		Game.can_move = true
+
+
 func _on_DiskDetectionArea_area_entered(area:Area) -> void:
 	var disk = area.get_parent()
 	assert(disk is Disk)
@@ -47,27 +77,10 @@ func _on_DiskDetectionArea_area_entered(area:Area) -> void:
 	disk.discard()
 	
 	if not disk.check(): # if collision crash
-		var killer_disk_number = disk.number
-		$Sphere.destroy_animation()
-		$Tween.interpolate_property(Game, "speed", Game.speed, 0.0, 2.0)
-		$Tween.start()
-		yield(get_tree().create_timer(3),"timeout")
-		Game.disk_number = killer_disk_number
-		Game.current_disk = null
-		get_tree().change_scene("res://Logic/Level.tscn")
+		sphere_collided(disk)
 	else:
-		if $Disks.get_child_count() == 1:
-			print('no new disk to set')
-			Game.current_disk = null
-		else:
-			Game.current_disk = $Disks.get_child(1)
-		$UI.set_levels_done(disk.number)
-		if disk.number == Game.level_count:
-			$WinText.visible = true
-			$Symmetrizer.selected_disk = null
-			$Symmetrizer.global_transform.origin.z = $WinText.global_transform.origin.z + 1
-			Game.can_rotate = true
-			Game.can_move = true
+		sphere_passed(disk)
+
 
 func _on_AutoSymmArea_area_entered(area):
 	pass # Replace with function body.
