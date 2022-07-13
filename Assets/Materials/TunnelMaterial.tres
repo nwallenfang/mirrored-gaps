@@ -41,9 +41,8 @@ vec3 add_ring(vec2 uv) {
 	// period = 1/speed?
 	float period = 1.0;
 	float speed = 1.0/period;
-	float speed_meter_p_second = 40.0;
 	float tunnel_segment_length = tunnel_length/number_of_rings;
-	float uv_offset = mod(distance_travelled*uv1_scale.y/speed_meter_p_second, 2.0) - 1.0; // * scanline_period // tunnel_length/2.0
+	float uv_offset = mod(distance_travelled/scanline_speed, 2.0) - 1.0; // * scanline_period // tunnel_length/2.0
 
 	float scanline = smoothstep(0.5 - scanline_width, 0.5, grid_uv.y + 0.5 * uv_offset) 
 			* (1.0 - smoothstep(0.5, 0.5 + scanline_width, grid_uv.y + 0.5 *uv_offset)) * 1.0;//* pattern.r;
@@ -80,7 +79,7 @@ shader_param/scroll_direction = Vector2( 0, 1 )
 shader_param/scrolling_enabled = true
 shader_param/distance_travelled = 0.0
 shader_param/emit_rings = true
-shader_param/scanline_speed = 40.0
+shader_param/scanline_speed = 20.0
 shader_param/scanline_width = 0.005
 shader_param/scanline_intensity = 0.35
 shader_param/scanline_color1 = Color( 0.85098, 0, 1, 1 )
