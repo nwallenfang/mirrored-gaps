@@ -1,7 +1,9 @@
 extends Spatial
 
 var selected_disk: Disk
-var currently_symmetrizing = false
+var currently_symmetrizing := false
+
+var victory_animation := false
 
 onready var cursor = $Cursor
 
@@ -73,9 +75,11 @@ var cursor_speed_pixels := 300.0
 var cursor_speed_rotation_degrees := 90.0
 var cursor_max_distance := 10.0
 func _physics_process(delta):
+	if victory_animation:
+		$Cursor.translation.z = sin(Time.get_ticks_msec() * 1000) * 2
 	if selected_disk != null:
 		self.global_transform.origin = selected_disk.global_transform.origin + Vector3(0.0, 0.0, -.5)
-	if Game.can_move:
+	if Game.can_move and not currently_symmetrizing:
 		if Input.is_action_pressed("cursor_move_up"):
 			$Cursor.translation.y += cursor_speed_pixels * Game.meter_per_pixel * delta
 		if Input.is_action_pressed("cursor_move_down"):
@@ -84,7 +88,7 @@ func _physics_process(delta):
 			$Cursor.translation.x += cursor_speed_pixels * Game.meter_per_pixel * delta
 		if Input.is_action_pressed("cursor_move_right"):
 			$Cursor.translation.x -= cursor_speed_pixels * Game.meter_per_pixel * delta
-	if Game.can_rotate:
+	if Game.can_rotate and not currently_symmetrizing:
 		if Input.is_action_pressed("cursor_rotate_clock"):
 			$Cursor.rotation_degrees.z += cursor_speed_rotation_degrees * delta
 		if Input.is_action_pressed("cursor_rotate_counter"):
