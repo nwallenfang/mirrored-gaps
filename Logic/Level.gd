@@ -10,6 +10,7 @@ func _ready() -> void:
 	Game.ui = $UI
 	Game.speed_lines = $SpeedLines
 	Game.speed = Game.start_speed
+	Game.sphere = $Sphere
 
 var spawn_dist := 140.0
 var next_spawn := 0.0

@@ -8,6 +8,7 @@ var disk_number = 1
 var level_count = 20
 
 var current_disk : Disk setget set_current_disk
+var sphere: Node
 var symmetrizer
 var tunnel
 var ui
@@ -59,7 +60,8 @@ var can_move := false
 
 func set_available_symms(x):
 	available_symms = x
-	ui.show_available_symms(x)
+#	ui.show_available_symms(x)
+	sphere.show_symmetrizes_left(x)
 	if x == 0:
 		can_move = false
 		can_rotate = false

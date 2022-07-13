@@ -17,3 +17,11 @@ func destroy_animation():
 func reset_destruction():
 	$Mesh.visible = true
 	$Particles.emmitting = false
+
+
+func show_symmetrizes_left(number: int):
+	if number == 0:
+		$SymmetrizesLeft.visible = false
+	else:
+		$SymmetrizesLeft.visible = true
+		$SymmetrizesLeft.text = str(number)
