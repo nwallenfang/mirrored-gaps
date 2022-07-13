@@ -48,7 +48,10 @@ func calc_symm(im: Image, cursor_pos: Vector2, rotation: float): #  -> Image:
 	return result
 
 func symmetrize_done(result):
-	selected_disk.set_image(result)
+	#selected_disk.set_image(result)
+	selected_disk.splash_end(result)
+	yield(get_tree().create_timer(.3),"timeout")
+	Game.available_symms -= 1
 	currently_symmetrizing = false
 
 var cursor_speed_pixels := 300.0
@@ -81,9 +84,7 @@ func _physics_process(delta):
 				var cursor_rotation_radians = deg2rad($Cursor.rotation_degrees.z)
 				var image = selected_disk.get_image()
 				var func_state = calc_symm(image, cursor_position_pixel, cursor_rotation_radians)
+				selected_disk.splash_start(cursor_position_pixel, cursor_rotation_radians)
 				func_state.connect("completed", self, "symmetrize_done")
-				Game.available_symms -= 1
 				currently_symmetrizing = true
-
-		#selected_disk.set_image(Image.new().create(512, 512, false, Image.FORMAT_RGBA8))
 

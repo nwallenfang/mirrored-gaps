@@ -23,7 +23,6 @@ var speedup_active = false setget set_speedup_active
 var tutorials := {
 	1: "Press SPACE\nto create symmetry",
 	2: "Press Q/E\nto rotate the axis",
-	4: "Another Tutorial Text",
 	9: "Press WASD\nto move the axis",
 	13: "Sometimes you need\nto symmetrize\nmore than once"
 }

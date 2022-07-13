@@ -1,46 +1,14 @@
-[gd_scene load_steps=6 format=2]
+[gd_scene load_steps=8 format=2]
 
+[ext_resource path="res://Assets/Materials/DiskCover.tres" type="Material" id=1]
 [ext_resource path="res://Objects/Disk.gd" type="Script" id=2]
 [ext_resource path="res://testlevel.png" type="Texture" id=3]
+[ext_resource path="res://Assets/Materials/DiskShader.tres" type="Shader" id=4]
+[ext_resource path="res://Assets/Materials/YellowMaterial.tres" type="Material" id=5]
 
-[sub_resource type="Shader" id=3]
-code = "// NOTE: Shader automatically converted from Godot Engine 3.5.rc6's SpatialMaterial.
-
-shader_type spatial;
-render_mode async_visible,blend_mix,depth_draw_opaque,cull_back,diffuse_burley,specular_schlick_ggx;
-uniform vec4 albedo : hint_color;
-uniform sampler2D texture_albedo : hint_albedo;
-uniform float specular;
-uniform float metallic;
-uniform float roughness : hint_range(0,1);
-uniform float point_size : hint_range(0,128);
-uniform vec3 uv1_scale;
-uniform vec3 uv1_offset;
-uniform vec3 uv2_scale;
-uniform vec3 uv2_offset;
-
-
-void vertex() {
-	UV=UV*uv1_scale.xy+uv1_offset.xy;
-}
-
-
-
-
-void fragment() {
-	vec2 base_uv = UV;
-	vec4 albedo_tex = texture(texture_albedo,base_uv);
-	ALBEDO = albedo.rgb * albedo_tex.rgb;
-	METALLIC = metallic;
-	ROUGHNESS = roughness;
-	SPECULAR = specular;
-	ALPHA = albedo.a * albedo_tex.a * ALBEDO.r;
-}
-"
-
-[sub_resource type="ShaderMaterial" id=4]
+[sub_resource type="ShaderMaterial" id=6]
 resource_local_to_scene = true
-shader = SubResource( 3 )
+shader = ExtResource( 4 )
 shader_param/albedo = Color( 1, 1, 1, 1 )
 shader_param/specular = 0.5
 shader_param/metallic = 0.0
@@ -50,6 +18,9 @@ shader_param/uv1_scale = Vector3( 1, 1, 1 )
 shader_param/uv1_offset = Vector3( 0, 0, 0 )
 shader_param/uv2_scale = Vector3( 1, 1, 1 )
 shader_param/uv2_offset = Vector3( 0, 0, 0 )
+shader_param/cursor = Vector2( 0.3, 0.5 )
+shader_param/cursor_normal = Vector2( 1, 0 )
+shader_param/splash_progress = 0.2
 shader_param/texture_albedo = ExtResource( 3 )
 
 [sub_resource type="BoxShape" id=2]
@@ -60,7 +31,21 @@ script = ExtResource( 2 )
 
 [node name="Sprite3D" type="Sprite3D" parent="."]
 transform = Transform( -1, 0, -1.22225e-08, 0, 1, 0, 6.25299e-07, 0, -1, 0, 0, 0 )
-material_override = SubResource( 4 )
+material_override = SubResource( 6 )
+pixel_size = 0.0542
+texture = ExtResource( 3 )
+
+[node name="SplashYellow" type="Sprite3D" parent="."]
+transform = Transform( -1, 0, -1.22225e-08, 0, 1, 0, 6.25299e-07, 0, -1, 0, 0, -1 )
+visible = false
+material_override = ExtResource( 5 )
+pixel_size = 0.0542
+texture = ExtResource( 3 )
+
+[node name="SplashCover" type="Sprite3D" parent="."]
+transform = Transform( -1, 0, -1.22225e-08, 0, 1, 0, 6.25299e-07, 0, -1, 0, 0, -2 )
+visible = false
+material_override = ExtResource( 1 )
 pixel_size = 0.0542
 texture = ExtResource( 3 )
 
@@ -71,3 +56,7 @@ transform = Transform( 13.8502, 0, 0, 0, 13.8502, 0, 0, 0, 2.68514, 0, 0, 0 )
 shape = SubResource( 2 )
 
 [node name="Tween" type="Tween" parent="."]
+
+[node name="YellowTween" type="Tween" parent="."]
+
+[node name="SplashTween" type="Tween" parent="."]
