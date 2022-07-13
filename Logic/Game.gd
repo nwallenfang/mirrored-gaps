@@ -90,17 +90,23 @@ func set_speedup_active(active: bool):
 			speed_backup = Game.speed
 			#print($Tween)
 			$Tween.remove_all()
-			$Tween.interpolate_property(self, "speed", speed, speedup_speed, 1.7)
+			$Tween.interpolate_property(self, "speed", speed, speedup_speed, 1.7, Tween.TRANS_QUAD, Tween.EASE_IN_OUT)
 			$Tween.interpolate_property(self.speed_lines.get_node("MeshInstance").material_override, "shader_param/albedo", Color.transparent, Color.white, 1.5)
 			$Tween.start()
 	#		speed = Game.speedup_speed
 		else:
 			$Tween.remove_all()
-			$Tween.interpolate_property(self, "speed", speed, start_speed, 0.8)
+			$Tween.interpolate_property(self, "speed", speed, start_speed, 0.8, Tween.TRANS_QUAD, Tween.EASE_IN_OUT)
 			$Tween.interpolate_property(self.speed_lines.get_node("MeshInstance").material_override, "shader_param/albedo", Color.white, Color.transparent, .6)
 			$Tween.start()
 	#		speed = Game.speed_backup
 
 	speedup_active = active
-	
+
+func stop_speedlines_fast():
+	if speedup_active:
+		$Tween.remove_all()
+		$Tween.interpolate_property(self.speed_lines.get_node("MeshInstance").material_override, "shader_param/albedo", Color.white, Color.transparent, .3)
+		$Tween.start()
+
 	

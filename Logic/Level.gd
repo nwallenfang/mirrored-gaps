@@ -44,6 +44,7 @@ func spawn_disk():
 
 
 func sphere_collided(disk):
+	Game.stop_speedlines_fast()
 	var killer_disk_number = disk.number
 	$Sphere.destroy_animation()
 	$Tween.interpolate_property(Game, "speed", Game.speed, 0.0, 2.0)
