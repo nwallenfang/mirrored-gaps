@@ -10,6 +10,9 @@ anchor_bottom = 1.0
 size_flags_horizontal = 3
 size_flags_vertical = 3
 script = ExtResource( 1 )
+group1_color = Color( 0.231, 0.3717, 0.7, 1 )
+group2_color = Color( 0.708367, 0.79, 0.3002, 1 )
+group3_color = Color( 1, 0.468, 0.24, 1 )
 
 [node name="Dist" type="Label" parent="."]
 margin_top = 364.0
@@ -37,9 +40,18 @@ margin_left = 44.0
 margin_right = 234.0
 margin_bottom = 316.0
 
-[node name="Container" type="CenterContainer" parent="VBoxContainer/HBoxContainer/VBoxContainer"]
+[node name="Control" type="Control" parent="VBoxContainer/HBoxContainer/VBoxContainer"]
 margin_right = 190.0
-margin_bottom = 54.0
+
+[node name="Control2" type="Control" parent="VBoxContainer/HBoxContainer/VBoxContainer"]
+margin_top = 4.0
+margin_right = 190.0
+margin_bottom = 4.0
+
+[node name="Container" type="CenterContainer" parent="VBoxContainer/HBoxContainer/VBoxContainer"]
+margin_top = 8.0
+margin_right = 190.0
+margin_bottom = 62.0
 
 [node name="Group1" type="HBoxContainer" parent="VBoxContainer/HBoxContainer/VBoxContainer/Container"]
 unique_name_in_owner = true
@@ -55,29 +67,33 @@ text = "0"
 
 [node name="Limit" type="Label" parent="VBoxContainer/HBoxContainer/VBoxContainer/Container/Group1"]
 margin_left = 28.0
-margin_right = 76.0
+margin_right = 100.0
 margin_bottom = 54.0
 custom_fonts/font = ExtResource( 4 )
-text = "/8"
+text = "/20"
 
-[node name="Container2" type="CenterContainer" parent="VBoxContainer/HBoxContainer/VBoxContainer"]
-margin_top = 58.0
-margin_right = 190.0
-margin_bottom = 112.0
+[node name="Container2" type="CenterContainer" parent="VBoxContainer/HBoxContainer/VBoxContainer/Container"]
+margin_left = 95.0
+margin_top = 27.0
+margin_right = 95.0
+margin_bottom = 27.0
 
-[node name="Group2" type="HBoxContainer" parent="VBoxContainer/HBoxContainer/VBoxContainer/Container2"]
+[node name="Group2" type="HBoxContainer" parent="VBoxContainer/HBoxContainer/VBoxContainer/Container/Container2"]
 unique_name_in_owner = true
-margin_right = 190.0
-margin_bottom = 54.0
+visible = false
+margin_left = -95.0
+margin_top = -27.0
+margin_right = 95.0
+margin_bottom = 27.0
 rect_min_size = Vector2( 190, 0 )
 
-[node name="Progress" type="Label" parent="VBoxContainer/HBoxContainer/VBoxContainer/Container2/Group2"]
+[node name="Progress" type="Label" parent="VBoxContainer/HBoxContainer/VBoxContainer/Container/Container2/Group2"]
 margin_right = 24.0
 margin_bottom = 54.0
 custom_fonts/font = ExtResource( 4 )
 text = "0"
 
-[node name="Limit" type="Label" parent="VBoxContainer/HBoxContainer/VBoxContainer/Container2/Group2"]
+[node name="Limit" type="Label" parent="VBoxContainer/HBoxContainer/VBoxContainer/Container/Container2/Group2"]
 margin_left = 28.0
 margin_right = 76.0
 margin_bottom = 54.0
@@ -85,14 +101,16 @@ custom_fonts/font = ExtResource( 4 )
 text = "/4"
 
 [node name="Container3" type="CenterContainer" parent="VBoxContainer/HBoxContainer/VBoxContainer"]
-margin_top = 116.0
+margin_top = 66.0
 margin_right = 190.0
-margin_bottom = 170.0
+margin_bottom = 66.0
 
 [node name="Group3" type="HBoxContainer" parent="VBoxContainer/HBoxContainer/VBoxContainer/Container3"]
 unique_name_in_owner = true
+visible = false
+margin_top = -27.0
 margin_right = 190.0
-margin_bottom = 54.0
+margin_bottom = 27.0
 rect_min_size = Vector2( 190, 0 )
 
 [node name="Progress" type="Label" parent="VBoxContainer/HBoxContainer/VBoxContainer/Container3/Group3"]
