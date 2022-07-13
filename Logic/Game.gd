@@ -11,6 +11,7 @@ var current_disk : Disk setget set_current_disk
 var symmetrizer
 var tunnel
 var ui
+var speed_lines
 
 var speed := 12.0 # meter / second
 var speed_backup := -1.0
@@ -86,11 +87,13 @@ func set_speedup_active(active: bool):
 			#print($Tween)
 			$Tween.remove_all()
 			$Tween.interpolate_property(self, "speed", speed, speedup_speed, 1.7)
+			$Tween.interpolate_property(self.speed_lines.get_node("MeshInstance").material_override, "shader_param/albedo", Color.transparent, Color.white, 1.5)
 			$Tween.start()
 	#		speed = Game.speedup_speed
 		else:
 			$Tween.remove_all()
 			$Tween.interpolate_property(self, "speed", speed, start_speed, 0.8)
+			$Tween.interpolate_property(self.speed_lines.get_node("MeshInstance").material_override, "shader_param/albedo", Color.white, Color.transparent, .6)
 			$Tween.start()
 	#		speed = Game.speed_backup
 

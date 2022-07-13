@@ -8,6 +8,7 @@ func _ready() -> void:
 	Game.tunnel = $Tunnel
 	Game.symmetrizer = $Symmetrizer
 	Game.ui = $UI
+	Game.speed_lines = $SpeedLines
 	Game.speed = Game.start_speed
 
 var spawn_dist := 140.0
