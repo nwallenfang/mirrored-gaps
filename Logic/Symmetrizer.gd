@@ -5,18 +5,33 @@ var currently_symmetrizing = false
 
 onready var cursor = $Cursor
 
-var number_of_frames = 20  # to spread the workload over
+var bool_data := {} # map vec2 -> bool
+
+func set_pixel_data(x, y):
+	#if min(x, y) >= 0 and max(x, y) < Game.image_res:
+	bool_data[Vector2(x,y)] = true
+
+func set_pixel_area(x, y):
+	set_pixel_data(x+1,y+1)
+	set_pixel_data(x+1,y)
+	set_pixel_data(x+1,y-1)
+	set_pixel_data(x,y+1)
+	set_pixel_data(x,y)
+	set_pixel_data(x,y-1)
+	set_pixel_data(x-1,y+1)
+	set_pixel_data(x-1,y)
+	set_pixel_data(x-1,y-1)
+
+var number_of_frames = 30  # to spread the workload over
 func calc_symm(im: Image, cursor_pos: Vector2, rotation: float): #  -> Image:
-	var res = Game.image_res#im.get_height()
-#	print(Time.get_ticks_usec())
-	var result : Image = Image.new()#im.duplicate(true)
-	
+	var res = Game.image_res
+
+	var result : Image = Image.new()
 	result.create(res, res, false, Image.FORMAT_RGBA8)
-#	print(Time.get_ticks_usec())
+	bool_data = {}
+
 	yield(get_tree(), "idle_frame")
-#	yield(get_tree().create_timer(2.0), "timeout")
-#	im.lock()
-#	result.lock()
+
 	var rotation_vec := Vector2.LEFT.rotated(rotation)
 	var rows_this_frame = 0
 	var rows_per_frame = int(res/number_of_frames)
@@ -24,26 +39,35 @@ func calc_symm(im: Image, cursor_pos: Vector2, rotation: float): #  -> Image:
 	result.fill(Color.white)
 	yield(get_tree(), "idle_frame")
 	im.lock()
-	result.lock()
-
 	for i in range(res):
 		if rows_this_frame >= rows_per_frame:
 			rows_this_frame = 0
 			yield(get_tree(), "idle_frame")
 		for j in range(res):
 			if im.get_pixel(i, j) == Color.black:
-				result.set_pixel(i, j, Color.black)
+				set_pixel_area(i, j)
 				var pos = Vector2(i, j)
 				var mirrored = (pos - cursor_pos).reflect(rotation_vec) + cursor_pos
 				if mirrored.x < Game.image_res-1 and mirrored.x > 0 and mirrored.y < Game.image_res-1 and mirrored.y > 0:
-					result.set_pixel(int(mirrored.x), int(mirrored.y), Color.black)
-					result.set_pixel(int(mirrored.x+1), int(mirrored.y), Color.black)
-					result.set_pixel(int(mirrored.x-1), int(mirrored.y), Color.black)
-					result.set_pixel(int(mirrored.x), int(mirrored.y+1), Color.black)
-					result.set_pixel(int(mirrored.x), int(mirrored.y-1), Color.black)
+					set_pixel_area(mirrored.x, mirrored.y)
 		rows_this_frame += 1
-	result.unlock()
 	im.unlock()
+	yield(get_tree(), "idle_frame")
+	var counter = 0
+	result.lock()
+	print(len(bool_data))
+	for xy in bool_data.keys():
+		var x = int(xy.x)
+		var y = int(xy.y)
+		if min(x, y) < 0 or max(x, y) >= Game.image_res:
+			continue
+		counter += 1
+		if counter >= 20000:
+			counter = 0
+			yield(get_tree(), "idle_frame")
+		if bool_data[xy]:
+			result.set_pixel(xy[0], xy[1], Color.black)
+	result.unlock()
 
 	return result
 
