@@ -11,7 +11,7 @@ func calc_symm(im: Image, cursor_pos: Vector2, rotation: float): #  -> Image:
 
 	var result : Image = Image.new()
 	
-	result.create(res, res, false, Image.FORMAT_RGBA8)
+	result.create(res, res, false, Image.FORMAT_L8)
 
 	yield(get_tree(), "idle_frame")
 
@@ -42,16 +42,20 @@ func calc_symm(im: Image, cursor_pos: Vector2, rotation: float): #  -> Image:
 					result.set_pixel(i-1, j-1, Color.black)
 				var pos = Vector2(i, j)
 				var mirrored = (pos - cursor_pos).reflect(rotation_vec) + cursor_pos
+				var mirrored_x = int(mirrored.x)
+				var mirrored_y = int(mirrored.y)
+				
 				if mirrored.x < Game.image_res-1 and mirrored.x > 0 and mirrored.y < Game.image_res-1 and mirrored.y > 0:
-					result.set_pixel(int(mirrored.x), int(mirrored.y), Color.black)
-					result.set_pixel(int(mirrored.x+1), int(mirrored.y), Color.black)
-					result.set_pixel(int(mirrored.x-1), int(mirrored.y), Color.black)
-					result.set_pixel(int(mirrored.x), int(mirrored.y+1), Color.black)
-					result.set_pixel(int(mirrored.x), int(mirrored.y-1), Color.black)
-					result.set_pixel(int(mirrored.x-1), int(mirrored.y-1), Color.black)
-					result.set_pixel(int(mirrored.x+1), int(mirrored.y-1), Color.black)
-					result.set_pixel(int(mirrored.x-1), int(mirrored.y+1), Color.black)
-					result.set_pixel(int(mirrored.x+1), int(mirrored.y+1), Color.black)
+					result.set_pixel(mirrored_x, mirrored_y, Color.black)
+					result.set_pixel(mirrored_x + 1, mirrored_y, Color.black)
+					result.set_pixel(mirrored_x - 1, mirrored_y, Color.black)
+					result.set_pixel(mirrored_x, mirrored_y + 1, Color.black)
+					result.set_pixel(mirrored_x, mirrored_y - 1, Color.black)
+					result.set_pixel(mirrored_x - 1, mirrored_y - 1, Color.black)
+					result.set_pixel(mirrored_x + 1, mirrored_y - 1, Color.black)
+					result.set_pixel(mirrored_x - 1, mirrored_y + 1, Color.black)
+					result.set_pixel(mirrored_x + 1, mirrored_y + 1, Color.black)
+
 		rows_this_frame += 1
 	result.unlock()
 	im.unlock()
@@ -88,7 +92,6 @@ func _physics_process(delta):
 	if $Cursor.translation.length() > cursor_max_distance:
 		$Cursor.translation *= cursor_max_distance / $Cursor.translation.length()
 	if Input.is_action_just_pressed("symmetrize"):
-		# TODO only call calc_symm if there isn't an ongoing calc_symm at the moment
 		if (not currently_symmetrizing) and is_instance_valid(selected_disk):
 			if Game.available_symms > 0:
 				var cursor_position_pixel = Vector2.ONE * Game.image_res * .5 + Vector2(-$Cursor.translation.x, -$Cursor.translation.y) / Game.meter_per_pixel

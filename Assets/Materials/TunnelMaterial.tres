@@ -72,7 +72,7 @@ void fragment() {
 [resource]
 shader = SubResource( 2 )
 shader_param/albedo = Color( 1, 1, 1, 1 )
-shader_param/uv1_scale = Vector3( 5, 5, 5 )
+shader_param/uv1_scale = Vector3( 5, 20, 5 )
 shader_param/uv1_offset = Vector3( 0, 0.5, 0 )
 shader_param/scroll_speed = 12.0
 shader_param/tunnel_length = 527.19
