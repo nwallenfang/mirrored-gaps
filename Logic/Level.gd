@@ -9,6 +9,7 @@ func _ready() -> void:
 	Game.symmetrizer = $Symmetrizer
 	Game.ui = $UI
 	Game.speed_lines = $SpeedLines
+	#$SpeedLines/MeshInstance.material_override.set("shader_param/albedo", Color.transparent)
 	Game.speed = Game.start_speed
 	Game.sphere = $Sphere
 
@@ -44,10 +45,11 @@ func spawn_disk():
 
 
 func sphere_collided(disk):
+	Game.current_tries += 1
 	Game.stop_speedlines_fast()
 	var killer_disk_number = disk.number
 	$Sphere.destroy_animation()
-	$Tween.interpolate_property(Game, "speed", Game.speed, 0.0, 2.0)
+	$Tween.interpolate_property(Game, "speed", Game.speed, 0.0, .9, Tween.TRANS_QUAD, Tween.EASE_IN_OUT)
 	$Tween.start()
 
 	yield(get_tree().create_timer(2.0),"timeout")
@@ -55,10 +57,12 @@ func sphere_collided(disk):
 	Game.current_disk = null
 	
 	yield(Fade.fade_out(0.3), "finished")
+	Game.set_speedup_active(false)
 	get_tree().change_scene("res://Logic/Level.tscn")
 	Fade.fade_in(0.2)
 	
 func sphere_passed(disk):
+	Game.current_tries = 0
 	if $Disks.get_child_count() == 1:
 		print('no new disk to set')
 		Game.current_disk = null

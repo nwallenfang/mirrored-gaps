@@ -47,7 +47,7 @@ func calc_symm(im: Image, cursor_pos: Vector2, rotation: float): #  -> Image:
 				var mirrored_x = int(mirrored.x)
 				var mirrored_y = int(mirrored.y)
 				
-				if mirrored.x < Game.image_res-1 and mirrored.x > 0 and mirrored.y < Game.image_res-1 and mirrored.y > 0:
+				if mirrored_x < Game.image_res-1 and mirrored_x > 0 and mirrored_y < Game.image_res-1 and mirrored_y > 0:
 					result.set_pixel(mirrored_x, mirrored_y, Color.black)
 					result.set_pixel(mirrored_x + 1, mirrored_y, Color.black)
 					result.set_pixel(mirrored_x - 1, mirrored_y, Color.black)
