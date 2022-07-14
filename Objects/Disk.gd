@@ -37,7 +37,7 @@ func discard():
 	queue_free()
 
 var cross_origin := Vector2(256, 480)
-var cross_radius := 28
+var cross_radius := 25#28
 func check():
 	var im = get_image()
 	var test_pixels = [cross_origin]
