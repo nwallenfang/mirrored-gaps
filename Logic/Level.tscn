@@ -7,17 +7,7 @@
 [ext_resource path="res://UI/UI.tscn" type="PackedScene" id=5]
 [ext_resource path="res://UI/ui_font.tres" type="DynamicFont" id=6]
 [ext_resource path="res://Objects/SpeedLines.tscn" type="PackedScene" id=7]
-
-[sub_resource type="Environment" id=1]
-background_mode = 1
-background_color = Color( 0.321569, 0.321569, 0.321569, 1 )
-ambient_light_color = Color( 1, 1, 1, 1 )
-fog_enabled = true
-fog_color = Color( 0.321569, 0.321569, 0.321569, 1 )
-fog_sun_color = Color( 0, 0, 0, 1 )
-fog_depth_end = 175.6
-fog_depth_curve = 2.0
-dof_blur_far_distance = 90.66
+[ext_resource path="res://Assets/Materials/EnvironmentSky.tres" type="Environment" id=8]
 
 [sub_resource type="BoxShape" id=2]
 extents = Vector3( 1, 1, 1.23915 )
@@ -35,7 +25,7 @@ transform = Transform( 1, 0, 0, 0, 1, 0, 0, 0, 1, 0, -12.0316, -100.406 )
 transform = Transform( 1, 0, 0, 0, 0.866025, -0.5, 0, 0.5, 0.866025, 0, 0, 0 )
 
 [node name="WorldEnvironment" type="WorldEnvironment" parent="."]
-environment = SubResource( 1 )
+environment = ExtResource( 8 )
 
 [node name="Camera" type="Camera" parent="."]
 transform = Transform( -1, 0, 8.74228e-08, 0, 1, 0, -8.74228e-08, 0, -1, 0, 0, -123.479 )

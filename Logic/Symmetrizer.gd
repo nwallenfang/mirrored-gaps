@@ -72,7 +72,7 @@ func symmetrize_done(result):
 
 var cursor_speed_pixels := 300.0
 var cursor_speed_rotation_degrees := 90.0
-var cursor_max_distance := 10.0
+var cursor_max_distance := 11.0
 func _physics_process(delta):
 	if victory_animation:
 		$Cursor.translation.z = sin(Time.get_ticks_msec() * 1000) * 2

@@ -52,7 +52,7 @@ func sphere_collided(disk):
 	$Tween.interpolate_property(Game, "speed", Game.speed, 0.0, .9, Tween.TRANS_QUAD, Tween.EASE_IN_OUT)
 	$Tween.start()
 
-	yield(get_tree().create_timer(2.0),"timeout")
+	yield(get_tree().create_timer(1.2), "timeout")
 	Game.disk_number = killer_disk_number
 	Game.current_disk = null
 	
@@ -75,6 +75,7 @@ func sphere_passed(disk):
 		$Symmetrizer.global_transform.origin.z = $WinText.global_transform.origin.z + 1
 		Game.can_rotate = true
 		Game.can_move = true
+		$Symmetrizer.victory_animation = true
 
 
 func _on_DiskDetectionArea_area_entered(area:Area) -> void:

@@ -1,6 +1,6 @@
 [gd_scene load_steps=13 format=2]
 
-[ext_resource path="res://addons/kenney_prototype_textures/orange/texture_01.png" type="Texture" id=1]
+[ext_resource path="res://Assets/Sprites/OrbSpace.png" type="Texture" id=1]
 [ext_resource path="res://Objects/Sphere.gd" type="Script" id=2]
 [ext_resource path="res://Assets/Materials/SphereMaterial.tres" type="Material" id=3]
 [ext_resource path="res://UI/iosevka-extended-regular.ttf" type="DynamicFontData" id=4]
@@ -22,7 +22,12 @@ uniform vec3 uv1_scale;
 uniform vec3 uv1_offset;
 uniform vec3 uv2_scale;
 uniform vec3 uv2_offset;
+uniform vec4 fresnel_color : hint_color;
 
+float fresnel(float amount, vec3 normal, vec3 view)
+{
+	return pow((1.0 - clamp(dot(normalize(normal), normalize(view)), 0.0, 1.0 )), amount);
+}
 
 void vertex() {
 	UV=UV*uv1_scale.xy+uv1_offset.xy;
@@ -32,8 +37,13 @@ void vertex() {
 void fragment() {
 	vec2 base_uv = UV;
 	vec4 albedo_tex = texture(texture_albedo,base_uv);
+	float basic_fresnel = fresnel(3.0, NORMAL, VIEW);
 	ALBEDO = albedo.rgb * albedo_tex.rgb;
+	//METALLIC = 1.0;
+	ROUGHNESS = .1;
 	//ALPHA = .5;
+	EMISSION = .7 * ALBEDO * float (length(ALBEDO) > .5);
+	ALBEDO = mix(ALBEDO , fresnel_color.rgb, basic_fresnel);
 }
 "
 
@@ -44,10 +54,11 @@ shader_param/specular = 0.0
 shader_param/metallic = 0.0
 shader_param/roughness = 1.0
 shader_param/point_size = 1.0
-shader_param/uv1_scale = Vector3( 2, 2, 2 )
+shader_param/uv1_scale = Vector3( 2, 1, 1 )
 shader_param/uv1_offset = Vector3( 0, 0, 0 )
-shader_param/uv2_scale = Vector3( 1, 1, 1 )
+shader_param/uv2_scale = Vector3( 0, 1, 1 )
 shader_param/uv2_offset = Vector3( 0, 0, 0 )
+shader_param/fresnel_color = Color( 0.0784314, 0.792157, 1, 1 )
 shader_param/texture_albedo = ExtResource( 1 )
 
 [sub_resource type="Animation" id=2]
@@ -86,7 +97,7 @@ tracks/1/keys = {
 "times": PoolRealArray( 0, 1, 2 ),
 "transitions": PoolRealArray( 1, 1, 1 ),
 "update": 0,
-"values": [ Vector3( 0, 0, 0 ), Vector3( 180, 0, 0 ), Vector3( 360, 0, 0 ) ]
+"values": [ Vector3( 0, 0, 90 ), Vector3( 180, 0, 90 ), Vector3( 360, 0, 90 ) ]
 }
 
 [sub_resource type="SphereMesh" id=6]
