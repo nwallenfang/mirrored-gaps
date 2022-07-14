@@ -96,7 +96,7 @@ material = ExtResource( 3 )
 _data = [ Vector2( 0, 0.972727 ), 0.0, 0.0, 0, 0, Vector2( 1, 0 ), -3.06061, 0.0, 0, 0 ]
 
 [sub_resource type="DynamicFont" id=8]
-size = 100
+size = 110
 font_data = ExtResource( 4 )
 
 [node name="Sphere" type="Spatial"]
@@ -104,7 +104,7 @@ transform = Transform( 1.46845, 0, 0, 0, 1.46845, 0, 0, 0, 1.46845, 0, 0, 0 )
 script = ExtResource( 2 )
 
 [node name="Mesh" type="MeshInstance" parent="."]
-transform = Transform( 1.72723, 0, 0, 0, -1.72723, -2.60804e-07, 0, 2.60804e-07, -1.72723, 0, 0, 0 )
+transform = Transform( 1.72723, 0, 0, 0, -1.72723, -1.50999e-07, 0, 1.50999e-07, -1.72723, 0, 0, 0 )
 mesh = SubResource( 1 )
 material/0 = SubResource( 5 )
 
@@ -132,7 +132,9 @@ scale_amount_random = 0.71
 scale_amount_curve = SubResource( 7 )
 
 [node name="SymmetrizesLeft" type="Label3D" parent="."]
-transform = Transform( -1, 0, -8.74228e-08, 0, 1, 0, 8.74228e-08, 0, -1, 0, 0.225785, -1.76201 )
+transform = Transform( -1, 0, -8.74228e-08, 0, 1, 0, 8.74228e-08, 0, -1, 0, 0.66892, -2.07409 )
 pixel_size = 0.025
 text = "1"
 font = SubResource( 8 )
+
+[node name="CollisionSound" type="AudioStreamPlayer" parent="."]
