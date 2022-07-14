@@ -29,6 +29,8 @@ uniform float rotation = 0.0;
 uniform vec4 tunnel_color1: hint_color;
 uniform vec4 tunnel_color2: hint_color;
 
+uniform float muster_speed = 0.1;
+
 const float PI = 3.141;
 
 varying vec2 scaled_uv;
@@ -162,15 +164,10 @@ void vertex() {
 	scaled_uv = UV.xy * uv1_scale.xy;
 }
 
-float speed(float y) {
-
-	return 0.1;
-}
-
 void fragment() {
 	vec2 movement = float(scrolling_enabled) * distance_travelled *uv1_scale.y/2.0/tunnel_length * scroll_direction;
 	
-	vec3 albedo_tex = vec3(snoise(vec3(scaled_uv + movement, speed(scaled_uv.y) * TIME)));
+	vec3 albedo_tex = vec3(snoise(vec3(scaled_uv + movement, muster_speed * distance_travelled)));
 //	float is_on_floor = float(UV.x > 0.45 && UV.x < 0.55);
 	vec3 ring = add_ring(UV);
 	
@@ -201,6 +198,7 @@ shader_param/scanline_color2 = Color( 0.266667, 0.254902, 0.235294, 1 )
 shader_param/rotation = 0.0
 shader_param/tunnel_color1 = Color( 0.25098, 0.196078, 0.301961, 1 )
 shader_param/tunnel_color2 = Color( 0.466667, 0.384314, 0.498039, 1 )
+shader_param/muster_speed = 0.013
 shader_param/offset = null
 shader_param/scale = 171.506
 shader_param/texture_albedo = ExtResource( 1 )

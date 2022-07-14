@@ -103,6 +103,7 @@ func set_speedup_active(active: bool):
 			$Tween.interpolate_property(self.speed_lines.get_node("MeshInstance").material_override, "shader_param/albedo", Color.white, Color.transparent, .8)
 			$Tween.interpolate_method(sphere, "set_roll_speed", 4.0, 1.5, 1.0)
 			$Tween.start()
+			tunnel.speedup_stopped()
 
 	speedup_active = active
 
