@@ -3,7 +3,7 @@
 [ext_resource path="res://Assets/Sprites/OrbSpace.png" type="Texture" id=1]
 [ext_resource path="res://Objects/Sphere.gd" type="Script" id=2]
 [ext_resource path="res://Assets/Materials/SphereMaterial.tres" type="Material" id=3]
-[ext_resource path="res://UI/strichliste_regular.otf" type="DynamicFontData" id=4]
+[ext_resource path="res://UI/iosevka-extended-regular.ttf" type="DynamicFontData" id=4]
 
 [sub_resource type="SphereMesh" id=1]
 

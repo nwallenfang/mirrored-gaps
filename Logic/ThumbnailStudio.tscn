@@ -24,8 +24,10 @@ shader_param/cursor_normal = Vector2( 1, 0 )
 shader_param/splash_progress = 0.2
 shader_param/color1 = null
 shader_param/color2 = null
-shader_param/scroll_speed = 1.0
-shader_param/scroll_dir = Vector2( 0.5, 0.5 )
+shader_param/noise_speed = 0.33
+shader_param/scroll_dir = Vector2( 0, 1 )
+shader_param/offset = null
+shader_param/scale = null
 shader_param/texture_albedo = ExtResource( 5 )
 
 [sub_resource type="ShaderMaterial" id=4]

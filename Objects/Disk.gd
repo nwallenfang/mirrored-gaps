@@ -72,10 +72,10 @@ func splash_start(cursor_pixel, rotation_rads):
 	$SplashCover.material_override.set("shader_param/colors_inverted", false)
 	$SplashTween.interpolate_property($SplashCover.material_override, "shader_param/splash_progress", 0.0, 1.0, .4)
 	$SplashTween.start()
-	yield($SplashTween,"tween_all_completed")
-	$SplashTween.interpolate_property($SplashCover.material_override, "shader_param/splash_progress", 1.0, 0.0, .4)
-	$SplashCover.material_override.set("shader_param/colors_inverted", true)
-	$SplashTween.start()
+#	yield($SplashTween,"tween_all_completed")
+#	$SplashTween.interpolate_property($SplashCover.material_override, "shader_param/splash_progress", 1.0, 0.0, .4)
+#	$SplashCover.material_override.set("shader_param/colors_inverted", true)
+#	$SplashTween.start()
 
 
 func splash_end(im):

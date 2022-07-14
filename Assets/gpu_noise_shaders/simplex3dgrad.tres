@@ -1,30 +1,8 @@
 [gd_resource type="Shader" format=2]
 
 [resource]
-code = "// NOTE: Shader automatically converted from Godot Engine 3.5.rc6's SpatialMaterial.
 
-shader_type spatial;
-render_mode async_visible,blend_mix,depth_draw_opaque,cull_back,diffuse_burley,specular_schlick_ggx;
-uniform vec4 albedo : hint_color;
-uniform sampler2D texture_albedo : hint_albedo;
-uniform float specular;
-uniform float metallic;
-uniform float roughness : hint_range(0,1);
-uniform float point_size : hint_range(0,128);
-uniform vec3 uv1_scale;
-uniform vec3 uv1_offset;
-uniform vec3 uv2_scale;
-uniform vec3 uv2_offset;
-uniform vec2 cursor;
-uniform vec2 cursor_normal;
-uniform float splash_progress;
-
-uniform vec4 color1: hint_color;
-uniform vec4 color2: hint_color;
-uniform sampler2D texture_noise;
-uniform float noise_speed = 0.33;
-uniform vec2 scroll_dir = vec2(0.0, 1.0);
-uniform float noise_scale = 3.5;
+code = "shader_type canvas_item;
 
 uniform vec2 offset;
 uniform float scale:hint_range(0.5, 1000.0);
@@ -49,20 +27,20 @@ vec4 mod289_4(vec4 x) {
 }
 
 vec4 permute(vec4 x) {
-    return mod289_4(((x * 34.0) + 1.0) * x);
+    return mod289_4(((x*34.0)+1.0)*x);
 }
 
 vec4 taylorInvSqrt(vec4 r) {
     return 2.79284291400159 - 0.85373472095314 * r;
 }
 
-float snoise(vec3 v) { 
+float snoise(vec3 v, out vec3 gradient) {
     vec2 C = vec2(1.0/6.0, 1.0/3.0) ;
     vec4 D = vec4(0.0, 0.5, 1.0, 2.0);
     
     // First corner
     vec3 i  = floor(v + dot(v, vec3(C.y)) );
-    vec3 x0 = v - i + dot(i, vec3(C.x)) ;
+    vec3 x0 =   v - i + dot(i, vec3(C.x)) ;
     
     // Other corners
     vec3 g = step(x0.yzx, x0.xyz);
@@ -108,8 +86,8 @@ float snoise(vec3 v) {
     vec4 s1 = floor(b1)*2.0 + 1.0;
     vec4 sh = -step(h, vec4(0.0));
     
-    vec4 a0 = b0.xzyw + s0.xzyw*sh.xxyy ;
-    vec4 a1 = b1.xzyw + s1.xzyw*sh.zzww ;
+    vec4 a0 = b0.xzyw + s0.xzyw * sh.xxyy ;
+    vec4 a1 = b1.xzyw + s1.xzyw * sh.zzww ;
     
     vec3 p0 = vec3(a0.xy,h.x);
     vec3 p1 = vec3(a0.zw,h.y);
@@ -125,29 +103,23 @@ float snoise(vec3 v) {
     
     // Mix final noise value
     vec4 m = max(0.6 - vec4(dot(x0,x0), dot(x1,x1), dot(x2,x2), dot(x3,x3)), vec4(0.0));
-    m = m * m;
-    return 22.0 * dot( m*m, vec4( dot(p0,x0), dot(p1,x1), dot(p2,x2), dot(p3,x3) ) );
+    vec4 m2 = m * m;
+    vec4 m4 = m2 * m2;
+    vec4 pdotx = vec4(dot(p0,x0), dot(p1,x1), dot(p2,x2), dot(p3,x3));
+    
+    // Determine noise gradient
+    vec4 temp = m2 * m * pdotx;
+    gradient = -8.0 * (temp.x * x0 + temp.y * x1 + temp.z * x2 + temp.w * x3);
+    gradient += m4.x * p0 + m4.y * p1 + m4.z * p2 + m4.w * p3;
+    gradient *= 42.0;
+    
+    return 22.0 * dot(m4, pdotx);
 }
-
-vec2 random(vec2 uv){
-    uv = vec2( dot(uv, vec2(127.1,311.7) ),
-               dot(uv, vec2(269.5,183.3) ) );
-    return -1.0 + 2.0 * fract(sin(uv) * 43758.5453123);
-}
-
-void vertex() {
-	UV=UV*uv1_scale.xy+uv1_offset.xy;
-}
-
 
 void fragment() {
-	vec2 base_uv = UV;
-	vec4 albedo_tex = texture(texture_albedo,base_uv);
-	ALBEDO = mix(color1.rgb, color2.rgb, float(snoise(vec3(noise_scale * UV.x, noise_scale * UV.y, noise_speed * TIME))*115.0 < 0.5));
-//	ALBEDO = mix(color1.rgb, color2.rgb, 0.5);
-	METALLIC = metallic;
-	ROUGHNESS = roughness;
-	SPECULAR = specular;
-	ALPHA = albedo_tex.r;// * ALBEDO.r;
-}
-"
+    //normally could be used for lots of stuff, like normal map generation
+    vec3 grad = vec3(0.0);
+    float n = snoise(vec3((UV + offset) * scale, TIME), grad) * 0.5 + 0.5;
+    COLOR.rgb = vec3(grad.y);
+}"
+
