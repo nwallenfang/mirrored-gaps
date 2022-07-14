@@ -23,7 +23,7 @@ func show_available_symms(i):
 
 var levels_done : int setget set_levels_done
 onready var group = get_node("%Group1")
-onready var group_sizes = [8, 4, 8]
+onready var group_sizes = [8, 5, 5]
 export var group1_color: Color
 export var group2_color: Color
 export var group3_color: Color

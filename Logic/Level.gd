@@ -90,5 +90,3 @@ func _on_DiskDetectionArea_area_entered(area:Area) -> void:
 		sphere_passed(disk)
 
 
-func _on_AutoSymmArea_area_entered(area):
-	pass # Replace with function body.

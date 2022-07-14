@@ -143,8 +143,10 @@ scale_amount_random = 0.71
 scale_amount_curve = SubResource( 7 )
 
 [node name="SymmetrizesLeft" type="Label3D" parent="."]
-transform = Transform( -1, 0, -8.74228e-08, 0, 1, 0, 8.74228e-08, 0, -1, 0, 0.66892, -2.07409 )
+transform = Transform( -1, 0, -8.74228e-08, 0, 1, 0, 8.74228e-08, 0, -1, 0, 0.962087, -1.78843 )
+visible = false
 pixel_size = 0.025
+modulate = Color( 1, 1, 1, 0.533333 )
 text = "1"
 font = SubResource( 8 )
 

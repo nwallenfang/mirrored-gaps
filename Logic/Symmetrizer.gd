@@ -104,5 +104,6 @@ func _physics_process(delta):
 				selected_disk.splash_start(cursor_position_pixel, cursor_rotation_radians)
 				func_state.connect("completed", self, "symmetrize_done")
 				currently_symmetrizing = true
+				Game.tunnel.speedup_started()
 				Game.available_symms -= 1
 

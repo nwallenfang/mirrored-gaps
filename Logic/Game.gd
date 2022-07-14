@@ -60,6 +60,8 @@ var can_move := false
 func set_available_symms(x):
 	available_symms = x
 #	ui.show_available_symms(x)
+	if x >= 2:
+		sphere.multi_sym_started = true
 	sphere.show_symmetrizes_left(x)
 	if x == 0:
 		can_move = false
@@ -92,7 +94,6 @@ func set_speedup_active(active: bool):
 			$Tween.interpolate_property(self.speed_lines.get_node("MeshInstance").material_override, "shader_param/albedo", Color.transparent, Color.white, 1.5)
 			$Tween.interpolate_method(sphere, "set_roll_speed", 1.5, 4.0, 1.0)
 			$Tween.start()
-			tunnel.speedup_started()
 		else:
 			$Tween.remove_all()
 			$Tween.interpolate_property(self, "speed", speed, start_speed, 0.8, Tween.TRANS_QUAD, Tween.EASE_IN_OUT)
