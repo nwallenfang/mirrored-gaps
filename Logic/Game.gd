@@ -5,7 +5,7 @@ var tube_scale := 27.782
 var image_res := 512
 var disk_number = 1
 
-var level_count = 20
+var level_count = 18
 
 var current_disk : Disk setget set_current_disk
 var sphere: Node
