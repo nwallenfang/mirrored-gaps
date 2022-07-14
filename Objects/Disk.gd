@@ -69,10 +69,12 @@ func splash_start(cursor_pixel, rotation_rads):
 	$SplashCover.material_override.set("shader_param/albedo", Color.white)
 	$SplashCover.material_override.set("shader_param/cursor", cursor_pixel/Game.image_res)
 	$SplashCover.material_override.set("shader_param/cursor_normal", Vector2.UP.rotated(rotation_rads))
+	$SplashCover.material_override.set("shader_param/colors_inverted", false)
 	$SplashTween.interpolate_property($SplashCover.material_override, "shader_param/splash_progress", 0.0, 1.0, .4)
 	$SplashTween.start()
 	yield($SplashTween,"tween_all_completed")
 	$SplashTween.interpolate_property($SplashCover.material_override, "shader_param/splash_progress", 1.0, 0.0, .4)
+	$SplashCover.material_override.set("shader_param/colors_inverted", true)
 	$SplashTween.start()
 
 

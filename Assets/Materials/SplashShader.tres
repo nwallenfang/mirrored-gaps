@@ -18,6 +18,10 @@ uniform vec3 uv2_offset;
 uniform vec2 cursor;
 uniform vec2 cursor_normal;
 uniform float splash_progress;
+uniform bool colors_inverted;
+
+uniform vec4 color_left: hint_color;
+uniform vec4 color_right: hint_color;
 
 void vertex() {
 	UV=UV*uv1_scale.xy+uv1_offset.xy;
@@ -26,8 +30,10 @@ void vertex() {
 void fragment() {
 	vec2 base_uv = UV;
 	vec4 albedo_tex = texture(texture_albedo,base_uv);
-	ALBEDO = albedo.rgb * albedo_tex.rgb;
-	ALBEDO = (1.0-float(abs(dot(UV-cursor, cursor_normal) / length(cursor_normal)) < splash_progress)) * vec3(1.0);
+	float direction = dot(UV-cursor, cursor_normal);
+	float inverted_factor = -2.0 * float(colors_inverted) + 1.0;  // this is -1 or 1 depending on bool
+	vec3 color = color_left.rgb * float(inverted_factor * direction < 0.0) + color_right.rgb * float(inverted_factor * direction >= 0.0);
+	ALBEDO = (1.0-float(abs(direction) / length(cursor_normal) < splash_progress)) * color;
 	METALLIC = metallic;
 	ROUGHNESS = roughness;
 	SPECULAR = specular;

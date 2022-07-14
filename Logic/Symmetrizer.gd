@@ -68,7 +68,6 @@ func symmetrize_done(result):
 	#selected_disk.set_image(result)
 	selected_disk.splash_end(result)
 	yield(get_tree().create_timer(.3),"timeout")
-	Game.available_symms -= 1
 	currently_symmetrizing = false
 
 var cursor_speed_pixels := 300.0
@@ -105,4 +104,5 @@ func _physics_process(delta):
 				selected_disk.splash_start(cursor_position_pixel, cursor_rotation_radians)
 				func_state.connect("completed", self, "symmetrize_done")
 				currently_symmetrizing = true
+				Game.available_symms -= 1
 

@@ -8,6 +8,7 @@ var disk_number = 1
 var level_count = 20
 
 var current_disk : Disk setget set_current_disk
+var sphere: Node
 var symmetrizer
 var tunnel
 var ui
@@ -15,17 +16,17 @@ var speed_lines
 
 var speed := 12.0 # meter / second
 var speed_backup := -1.0
-var start_speed := 12.0
+var start_speed := 8.0
 var accel := 0.0#.7
 
-var speedup_speed = 50.0
+var speedup_speed = 65.0
 var speedup_active = false setget set_speedup_active
 
 var tutorials := {
 	1: "Press SPACE\nto create symmetry",
 	2: "Press Q/E\nto rotate the axis",
 	9: "Press WASD\nto move the axis",
-	13: "Sometimes you need\nto symmetrize\nmore than once"
+	13: "Sometimes you\ncan symmetrize\nmore than once"
 }
 
 var level_data_dict := { #symm count, can_rotate, can_move, cursor_reset_location, cursor_reset_rotation
@@ -59,7 +60,8 @@ var can_move := false
 
 func set_available_symms(x):
 	available_symms = x
-	ui.show_available_symms(x)
+#	ui.show_available_symms(x)
+	sphere.show_symmetrizes_left(x)
 	if x == 0:
 		can_move = false
 		can_rotate = false
@@ -88,17 +90,24 @@ func set_speedup_active(active: bool):
 			speed_backup = Game.speed
 			#print($Tween)
 			$Tween.remove_all()
-			$Tween.interpolate_property(self, "speed", speed, speedup_speed, 1.7)
+			$Tween.interpolate_property(self, "speed", speed, speedup_speed, 1.7, Tween.TRANS_QUAD, Tween.EASE_IN_OUT)
 			$Tween.interpolate_property(self.speed_lines.get_node("MeshInstance").material_override, "shader_param/albedo", Color.transparent, Color.white, 1.5)
 			$Tween.start()
+			tunnel.speedup_started()
 	#		speed = Game.speedup_speed
 		else:
 			$Tween.remove_all()
-			$Tween.interpolate_property(self, "speed", speed, start_speed, 0.8)
+			$Tween.interpolate_property(self, "speed", speed, start_speed, 0.8, Tween.TRANS_QUAD, Tween.EASE_IN_OUT)
 			$Tween.interpolate_property(self.speed_lines.get_node("MeshInstance").material_override, "shader_param/albedo", Color.white, Color.transparent, .6)
 			$Tween.start()
 	#		speed = Game.speed_backup
 
 	speedup_active = active
-	
+
+func stop_speedlines_fast():
+	if speedup_active:
+		$Tween.remove_all()
+		$Tween.interpolate_property(self.speed_lines.get_node("MeshInstance").material_override, "shader_param/albedo", Color.white, Color.transparent, .3)
+		$Tween.start()
+
 	

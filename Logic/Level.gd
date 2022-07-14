@@ -10,6 +10,7 @@ func _ready() -> void:
 	Game.ui = $UI
 	Game.speed_lines = $SpeedLines
 	Game.speed = Game.start_speed
+	Game.sphere = $Sphere
 
 var spawn_dist := 140.0
 var next_spawn := 0.0
@@ -43,6 +44,7 @@ func spawn_disk():
 
 
 func sphere_collided(disk):
+	Game.stop_speedlines_fast()
 	var killer_disk_number = disk.number
 	$Sphere.destroy_animation()
 	$Tween.interpolate_property(Game, "speed", Game.speed, 0.0, 2.0)
