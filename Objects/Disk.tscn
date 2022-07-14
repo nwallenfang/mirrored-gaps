@@ -9,6 +9,7 @@
 [sub_resource type="OpenSimplexNoise" id=7]
 
 [sub_resource type="NoiseTexture" id=8]
+seamless = true
 noise = SubResource( 7 )
 
 [sub_resource type="ShaderMaterial" id=6]
@@ -26,10 +27,12 @@ shader_param/uv2_offset = Vector3( 0, 0, 0 )
 shader_param/cursor = Vector2( 0.3, 0.5 )
 shader_param/cursor_normal = Vector2( 1, 0 )
 shader_param/splash_progress = 0.543
-shader_param/color1 = Color( 0.835294, 0.45098, 0.0823529, 1 )
-shader_param/color2 = Color( 0.176471, 0.184314, 0.611765, 1 )
-shader_param/scroll_speed = 1.0
-shader_param/scroll_dir = Vector2( 0.5, 0.5 )
+shader_param/color1 = Color( 0.203922, 0.2, 0.2, 1 )
+shader_param/color2 = Color( 0.682353, 0.682353, 0.682353, 1 )
+shader_param/noise_speed = 0.25
+shader_param/scroll_dir = Vector2( 0, 1 )
+shader_param/offset = null
+shader_param/scale = null
 shader_param/texture_albedo = ExtResource( 3 )
 shader_param/texture_noise = SubResource( 8 )
 
