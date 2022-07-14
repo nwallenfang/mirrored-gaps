@@ -29,7 +29,7 @@ var tutorials := {
 	1: "Press SPACE\nto create symmetry",
 	2: "Press Q/E\nto rotate the axis",
 	9: "Press WASD\nto move the axis",
-	13: "Sometimes you\ncan symmetrize\nmore than once"
+	14: "Sometimes you\ncan symmetrize\nmore than once"
 }
 
 var level_data_dict := { #symm count, can_rotate, can_move, cursor_reset_location, cursor_reset_rotation

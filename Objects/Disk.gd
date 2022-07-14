@@ -36,8 +36,8 @@ func discard():
 	yield(get_tree().create_timer(3.5), "timeout")
 	queue_free()
 
-var cross_origin := Vector2(256, 480)
-var cross_radius := 25#28
+var cross_origin := Vector2(256, 476)
+var cross_radius := 26
 func check():
 	var im = get_image()
 	var test_pixels = [cross_origin]
