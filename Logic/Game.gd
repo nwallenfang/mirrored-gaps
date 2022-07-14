@@ -45,17 +45,13 @@ var level_data_dict := { #symm count, can_rotate, can_move, cursor_reset_locatio
 	10: [1, true, true, null, null],
 	11: [1, true, true, null, null],
 	12: [1, true, true, null, null],
-	13: [2, true, true, null, null],
-	14: [3, true, true, null, null],
-	15: [3, true, true, null, null],
+	13: [1, true, true, null, null],
+	14: [2, true, true, null, null],
+	15: [2, true, true, null, null],
 	16: [2, true, true, null, null],
-	17: [2, true, true, null, null],
-	18: [3, true, true, null, null],
-	19: [3, true, true, null, null],
-	20: [1, true, true, null, null],
+	17: [3, true, true, null, null],
+	18: [1, true, true, null, null],
 }
-
-var number_of_levels_per_group = [8, 6, 14]
 
 var available_symms: int setget set_available_symms
 var can_rotate := false

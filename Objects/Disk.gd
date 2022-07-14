@@ -31,7 +31,7 @@ func load_disk_from_file(disk_number):
 
 func discard():
 	#yield(get_tree().create_timer(1), "timeout")
-	$Tween.interpolate_property($Sprite3D.material_override, "shader_param/albedo", Color.white, Color.transparent, 0.5)
+	$Tween.interpolate_property($Sprite3D.material_override, "shader_param/albedo", Color.white, Color.transparent, 0.4)
 	$Tween.start()
 	yield(get_tree().create_timer(3.5), "timeout")
 	queue_free()

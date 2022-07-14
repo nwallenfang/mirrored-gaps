@@ -75,7 +75,7 @@ var cursor_speed_rotation_degrees := 90.0
 var cursor_max_distance := 11.0
 func _physics_process(delta):
 	if victory_animation:
-		$Cursor.translation.z = sin(Time.get_ticks_msec() * 1000) * 2
+		$Cursor.translation.z = - sin(Time.get_ticks_msec() * 1000 * .05) * 2
 	if selected_disk != null:
 		self.global_transform.origin = selected_disk.global_transform.origin + Vector3(0.0, 0.0, -.5)
 	if Game.can_move and not currently_symmetrizing:
