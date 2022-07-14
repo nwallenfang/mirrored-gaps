@@ -1,4 +1,4 @@
-[gd_scene load_steps=7 format=2]
+[gd_scene load_steps=8 format=2]
 
 [ext_resource path="res://Assets/Materials/TunnelMaterial.tres" type="Material" id=1]
 [ext_resource path="res://Objects/Tunnel.gd" type="Script" id=2]
@@ -47,7 +47,18 @@ void fragment() {
 
 [sub_resource type="ShaderMaterial" id=4]
 shader = SubResource( 3 )
-shader_param/albedo = Color( 0.3, 0.132, 0.012, 1 )
+shader_param/albedo = Color( 0.141176, 0.141176, 0.141176, 1 )
+shader_param/uv1_scale = Vector3( 1, 1, 1 )
+shader_param/uv1_offset = Vector3( 0, 0, 0 )
+shader_param/uv2_scale = Vector3( 1, 1, 1 )
+shader_param/uv2_offset = Vector3( 0, 0, 0 )
+shader_param/symm_progress = -1.0
+shader_param/scanline_color = Color( 1, 1, 1, 1 )
+shader_param/scanline_width = 0.03
+
+[sub_resource type="ShaderMaterial" id=5]
+shader = SubResource( 3 )
+shader_param/albedo = Color( 1, 1, 1, 1 )
 shader_param/uv1_scale = Vector3( 1, 1, 1 )
 shader_param/uv1_offset = Vector3( 0, 0, 0 )
 shader_param/uv2_scale = Vector3( 1, 1, 1 )
@@ -68,5 +79,15 @@ material/0 = ExtResource( 1 )
 transform = Transform( 4.06511, 2.28079e-08, -2.23343e-05, 3.55383e-07, -0.260892, 0, -3.55383e-07, -1.99393e-15, -255.475, 0, -13.5362, 0 )
 mesh = SubResource( 2 )
 material/0 = SubResource( 4 )
+
+[node name="Floor2" type="MeshInstance" parent="."]
+transform = Transform( 0.356618, 2.00086e-09, -1.95931e-06, 3.55383e-07, -0.260892, 0, -3.55383e-07, -1.99393e-15, -255.475, 3.71321, -13.3159, 0 )
+mesh = SubResource( 2 )
+material/0 = SubResource( 5 )
+
+[node name="Floor3" type="MeshInstance" parent="."]
+transform = Transform( 0.356618, 2.00086e-09, -1.95931e-06, 3.55383e-07, -0.260892, 0, -3.55383e-07, -1.99393e-15, -255.475, -3.9419, -13.3159, 0 )
+mesh = SubResource( 2 )
+material/0 = SubResource( 5 )
 
 [node name="Tween" type="Tween" parent="."]

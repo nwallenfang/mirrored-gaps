@@ -24,6 +24,7 @@ uniform vec4 color2: hint_color;
 uniform sampler2D texture_noise;
 uniform float noise_speed = 0.33;
 uniform vec2 scroll_dir = vec2(0.0, 1.0);
+uniform float noise_scale = 3.5;
 
 uniform vec2 offset;
 uniform float scale:hint_range(0.5, 1000.0);
@@ -138,10 +139,11 @@ void vertex() {
 	UV=UV*uv1_scale.xy+uv1_offset.xy;
 }
 
+
 void fragment() {
 	vec2 base_uv = UV;
 	vec4 albedo_tex = texture(texture_albedo,base_uv);
-	ALBEDO = mix(color1.rgb, color2.rgb, float(snoise(vec3(UV.x, UV.y, noise_speed * TIME))*115.0 < 0.5));
+	ALBEDO = mix(color1.rgb, color2.rgb, float(snoise(vec3(noise_scale * UV.x, noise_scale * UV.y, noise_speed * TIME))*115.0 < 0.5));
 //	ALBEDO = mix(color1.rgb, color2.rgb, 0.5);
 	METALLIC = metallic;
 	ROUGHNESS = roughness;
