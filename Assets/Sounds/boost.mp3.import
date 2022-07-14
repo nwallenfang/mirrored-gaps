@@ -1,0 +1,15 @@
+[remap]
+
+importer="mp3"
+type="AudioStreamMP3"
+path="res://.import/boost.mp3-460706c23ed8455725218376059db199.mp3str"
+
+[deps]
+
+source_file="res://Assets/Sounds/boost.mp3"
+dest_files=[ "res://.import/boost.mp3-460706c23ed8455725218376059db199.mp3str" ]
+
+[params]
+
+loop=true
+loop_offset=0
