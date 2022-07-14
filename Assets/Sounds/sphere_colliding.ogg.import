@@ -1,0 +1,15 @@
+[remap]
+
+importer="ogg_vorbis"
+type="AudioStreamOGGVorbis"
+path="res://.import/sphere_colliding.ogg-e72cb7b64080b3d4007395f81ca0a243.oggstr"
+
+[deps]
+
+source_file="res://Assets/Sounds/sphere_colliding.ogg"
+dest_files=[ "res://.import/sphere_colliding.ogg-e72cb7b64080b3d4007395f81ca0a243.oggstr" ]
+
+[params]
+
+loop=false
+loop_offset=0
