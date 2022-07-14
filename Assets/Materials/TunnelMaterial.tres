@@ -60,11 +60,10 @@ void vertex() {
 void fragment() {
 	vec2 movement = float(scrolling_enabled) * distance_travelled *uv1_scale.y/2.0/tunnel_length * scroll_direction;
 	vec4 albedo_tex = texture(texture_albedo, scaled_uv + movement);
-	float is_on_floor = float(UV.x > 0.45 && UV.x < 0.55);
+//	float is_on_floor = float(UV.x > 0.45 && UV.x < 0.55);
 	vec3 ring = add_ring(UV);
 	
-	ALBEDO = is_on_floor * floor_color.rgb + 
-			 (1.0-is_on_floor) * (albedo.rgb * albedo_tex.rgb + ring);
+	ALBEDO = (albedo.rgb * albedo_tex.rgb + ring);
 }
 "
 

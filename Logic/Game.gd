@@ -26,7 +26,7 @@ var tutorials := {
 	1: "Press SPACE\nto create symmetry",
 	2: "Press Q/E\nto rotate the axis",
 	9: "Press WASD\nto move the axis",
-	13: "Sometimes you need\nto symmetrize\nmore than once"
+	13: "Sometimes you\ncan symmetrize\nmore than once"
 }
 
 var level_data_dict := { #symm count, can_rotate, can_move, cursor_reset_location, cursor_reset_rotation
@@ -93,6 +93,7 @@ func set_speedup_active(active: bool):
 			$Tween.interpolate_property(self, "speed", speed, speedup_speed, 1.7, Tween.TRANS_QUAD, Tween.EASE_IN_OUT)
 			$Tween.interpolate_property(self.speed_lines.get_node("MeshInstance").material_override, "shader_param/albedo", Color.transparent, Color.white, 1.5)
 			$Tween.start()
+			tunnel.speedup_started()
 	#		speed = Game.speedup_speed
 		else:
 			$Tween.remove_all()

@@ -1,4 +1,4 @@
-[gd_scene load_steps=4 format=2]
+[gd_scene load_steps=7 format=2]
 
 [ext_resource path="res://Assets/Materials/TunnelMaterial.tres" type="Material" id=1]
 [ext_resource path="res://Objects/Tunnel.gd" type="Script" id=2]
@@ -9,6 +9,53 @@ height = 1.0
 radial_segments = 32
 rings = 1
 
+[sub_resource type="CubeMesh" id=2]
+
+[sub_resource type="Shader" id=3]
+code = "// NOTE: Shader automatically converted from Godot Engine 3.5.rc6's SpatialMaterial.
+
+shader_type spatial;
+render_mode async_visible,blend_mix,depth_draw_opaque,cull_back,diffuse_burley,specular_schlick_ggx;
+uniform vec4 albedo : hint_color;
+uniform sampler2D texture_albedo : hint_albedo;
+
+uniform vec3 uv1_scale;
+uniform vec3 uv1_offset;
+uniform vec3 uv2_scale;
+uniform vec3 uv2_offset;
+
+uniform float symm_progress: hint_range(-1, 0);
+uniform vec4 scanline_color: hint_color;
+uniform float scanline_width = 0.1;
+
+void vertex() {
+	UV=UV*uv1_scale.xy+uv1_offset.xy;
+}
+
+
+void fragment() {
+	float scanline = smoothstep(0.5 - scanline_width, 0.5, UV.y + 0.5 * symm_progress) 
+			* (1.0 - smoothstep(0.5, 0.5 + scanline_width, UV.y + 0.5 * symm_progress));
+	
+	vec2 base_uv = UV;
+	vec4 albedo_tex = texture(texture_albedo,base_uv);
+	vec3 scanline_rgb = scanline * scanline_color.rgb;
+	ALBEDO = clamp(albedo_tex.rgb * albedo.rgb + scanline_rgb, 0.0, 1.0);
+
+}
+"
+
+[sub_resource type="ShaderMaterial" id=4]
+shader = SubResource( 3 )
+shader_param/albedo = Color( 0.0745098, 0.317647, 0.337255, 1 )
+shader_param/uv1_scale = Vector3( 1, 1, 1 )
+shader_param/uv1_offset = Vector3( 0, 0, 0 )
+shader_param/uv2_scale = Vector3( 1, 1, 1 )
+shader_param/uv2_offset = Vector3( 0, 0, 0 )
+shader_param/symm_progress = -1.0
+shader_param/scanline_color = Color( 1, 1, 1, 1 )
+shader_param/scanline_width = 0.03
+
 [node name="Tunnel" type="Spatial"]
 script = ExtResource( 2 )
 
@@ -16,3 +63,10 @@ script = ExtResource( 2 )
 transform = Transform( 13.891, 0, 0, 0, -2.30424e-05, 13.891, 0, -527.148, -6.07195e-07, 0, 0, 0 )
 mesh = SubResource( 1 )
 material/0 = ExtResource( 1 )
+
+[node name="Floor" type="MeshInstance" parent="."]
+transform = Transform( 4.06511, 2.28079e-08, -2.23343e-05, 3.55383e-07, -0.260892, 0, -3.55383e-07, -1.99393e-15, -255.475, 0, -13.5362, 0 )
+mesh = SubResource( 2 )
+material/0 = SubResource( 4 )
+
+[node name="Tween" type="Tween" parent="."]
