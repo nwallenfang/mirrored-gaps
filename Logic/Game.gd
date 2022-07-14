@@ -94,12 +94,14 @@ func set_speedup_active(active: bool):
 			$Tween.remove_all()
 			$Tween.interpolate_property(self, "speed", speed, speedup_speed if current_tries < 2 else super_speedup_speed, 1.7, Tween.TRANS_QUAD, Tween.EASE_IN_OUT)
 			$Tween.interpolate_property(self.speed_lines.get_node("MeshInstance").material_override, "shader_param/albedo", Color.transparent, Color.white, 1.5)
+			$Tween.interpolate_method(sphere, "set_roll_speed", 1.5, 4.0, 1.0)
 			$Tween.start()
 			tunnel.speedup_started()
 		else:
 			$Tween.remove_all()
 			$Tween.interpolate_property(self, "speed", speed, start_speed, 0.8, Tween.TRANS_QUAD, Tween.EASE_IN_OUT)
 			$Tween.interpolate_property(self.speed_lines.get_node("MeshInstance").material_override, "shader_param/albedo", Color.white, Color.transparent, .8)
+			$Tween.interpolate_method(sphere, "set_roll_speed", 4.0, 1.5, 1.0)
 			$Tween.start()
 
 	speedup_active = active
