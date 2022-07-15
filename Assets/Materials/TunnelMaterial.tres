@@ -173,7 +173,8 @@ void fragment() {
 	
 	vec3 tunnel_dark = albedo_tex * tunnel_color2.rgb;
 	
-	vec3 tunnel_color = mix(tunnel_color2.rgb, tunnel_color1.rgb, clamp(pow(albedo_tex.r, 0.2), 0.0, 1.0));
+//	vec3 tunnel_color = mix(tunnel_color2.rgb, tunnel_color1.rgb, clamp(pow(clamp(albedo_tex.r, 0.0, albedo_tex.r), 0.2), 0.0, 1.0));
+	vec3 tunnel_color = mix(tunnel_color2.rgb, tunnel_color1.rgb, clamp(pow(abs(albedo_tex.r), 0.2), 0.0, 1.0));
 //	vec3 tunnel_color = mix(tunnel_color2.rgb, tunnel_color1.rgb, albedo_tex.r);
 	ALBEDO = clamp(tunnel_color + ring, 0.0, 1.0);
 }
@@ -196,8 +197,8 @@ shader_param/scanline_intensity = 0.35
 shader_param/scanline_color1 = Color( 0.85098, 0, 1, 1 )
 shader_param/scanline_color2 = Color( 0.266667, 0.254902, 0.235294, 1 )
 shader_param/rotation = 0.0
-shader_param/tunnel_color1 = Color( 0.25098, 0.196078, 0.301961, 1 )
-shader_param/tunnel_color2 = Color( 0.466667, 0.384314, 0.498039, 1 )
+shader_param/tunnel_color1 = Color( 0, 0, 0, 1 )
+shader_param/tunnel_color2 = Color( 0.360784, 0.388235, 0.678431, 1 )
 shader_param/muster_speed = 0.013
 shader_param/offset = null
 shader_param/scale = 171.506

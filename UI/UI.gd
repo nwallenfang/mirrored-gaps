@@ -23,7 +23,7 @@ func show_available_symms(i):
 
 var levels_done : int setget set_levels_done
 onready var group = get_node("%Group1")
-onready var group_sizes = [8, 4, 8]
+onready var group_sizes = [8, 5, 5]
 export var group1_color: Color
 export var group2_color: Color
 export var group3_color: Color
@@ -37,6 +37,7 @@ func set_levels_done(_levels_done):
 
 	if Game.hard_levels: # HARD LEVELS
 		group.get_node("Progress").set("custom_colors/font_color", group4_color)
+		group.get_node("Progress").text = "%02d" % levels_done
 		return
 
 	var group_sum = 0
@@ -52,6 +53,7 @@ func set_levels_done(_levels_done):
 					group.get_node("Progress").set("custom_colors/font_color", group2_color)
 				3:
 					group.get_node("Progress").set("custom_colors/font_color", group3_color)
+			Game.tunnel.set_color_with_transition(index)
 			break
 	
 	group.get_node("Progress").text = "%02d" % levels_done
