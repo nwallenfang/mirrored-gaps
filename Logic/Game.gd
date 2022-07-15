@@ -5,7 +5,10 @@ var tube_scale := 27.782
 var image_res := 512
 var disk_number = 1
 
-var level_count = 18
+var hard_levels := false
+var level_count := 18 setget , get_level_count
+func get_level_count() -> int:
+	return level_count if not hard_levels else 10
 
 var current_disk : Disk setget set_current_disk
 var sphere: Node
@@ -32,6 +35,10 @@ var tutorials := {
 	14: "Sometimes you\ncan symmetrize\nmore than once"
 }
 
+var hard_tutorials := {
+	1: "So you want more?",
+}
+
 var level_data_dict := { #symm count, can_rotate, can_move, cursor_reset_location, cursor_reset_rotation
 	1: [1, false, false, null, null],
 	2: [1, true, false, null, null],
@@ -51,6 +58,19 @@ var level_data_dict := { #symm count, can_rotate, can_move, cursor_reset_locatio
 	16: [2, true, true, null, null],
 	17: [3, true, true, null, null],
 	18: [1, true, true, null, null],
+}
+
+var hard_level_data_dict := { #symm count, can_rotate, can_move, cursor_reset_location, cursor_reset_rotation
+	1: [1, true, true, null, null],
+	2: [1, true, true, null, null],
+	3: [1, true, true, null, null],
+	4: [1, true, true, null, null],
+	5: [1, true, true, null, null],
+	6: [1, true, true, null, null],
+	7: [1, true, true, null, null],
+	8: [2, true, true, null, null],
+	9: [1, true, true, null, null],
+	10: [3, true, true, null, null],
 }
 
 var available_symms: int setget set_available_symms
@@ -74,7 +94,11 @@ func set_current_disk(disk: Disk):
 		symmetrizer.selected_disk = disk
 	if disk == null:
 		return
-	var level_data = level_data_dict[disk.number]
+	var level_data
+	if not hard_levels:
+		level_data = level_data_dict[disk.number]
+	else:
+		level_data = hard_level_data_dict[disk.number]
 	self.available_symms = level_data[0]
 	can_rotate = level_data[1]
 	can_move = level_data[2]

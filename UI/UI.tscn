@@ -13,6 +13,7 @@ script = ExtResource( 1 )
 group1_color = Color( 0.231, 0.3717, 0.7, 1 )
 group2_color = Color( 0.708367, 0.79, 0.3002, 1 )
 group3_color = Color( 1, 0.468, 0.24, 1 )
+group4_color = Color( 1, 0.0509804, 0.87451, 1 )
 
 [node name="Dist" type="Label" parent="."]
 margin_top = 364.0

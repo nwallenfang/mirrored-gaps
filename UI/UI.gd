@@ -27,8 +27,17 @@ onready var group_sizes = [8, 4, 8]
 export var group1_color: Color
 export var group2_color: Color
 export var group3_color: Color
+export var group4_color: Color
+
+func _ready():
+	$VBoxContainer/HBoxContainer/VBoxContainer/Container/Group1/Limit.text = "/" + str(Game.level_count)
+
 func set_levels_done(_levels_done):
 	levels_done = _levels_done
+
+	if Game.hard_levels: # HARD LEVELS
+		group.get_node("Progress").set("custom_colors/font_color", group4_color)
+		return
 
 	var group_sum = 0
 	var index = 0

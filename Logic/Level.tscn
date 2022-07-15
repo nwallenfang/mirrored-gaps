@@ -60,6 +60,24 @@ text = "You did it!"
 font = ExtResource( 6 )
 
 [node name="Label3D2" type="Label3D" parent="WinText"]
+transform = Transform( -1, 0, -8.74228e-08, 0, 1, 0, 8.74228e-08, 0, -1, -0.0416422, -1.75327, 0 )
+text = "
+You may now close the game
+or press X to enter the
+hard levels."
+font = ExtResource( 6 )
+
+[node name="WinTextHard" type="Spatial" parent="."]
+transform = Transform( 1, 0, 0, 0, 1, 0, 0, 0, 1, 0, 0, -92.1351 )
+visible = false
+
+[node name="Label3D" type="Label3D" parent="WinTextHard"]
+transform = Transform( -1, 0, -8.74228e-08, 0, 1, 0, 8.74228e-08, 0, -1, 0, 2.55295, 0 )
+pixel_size = 0.02
+text = "You did it!"
+font = ExtResource( 6 )
+
+[node name="Label3D2" type="Label3D" parent="WinTextHard"]
 transform = Transform( -1, 0, -8.74228e-08, 0, 1, 0, 8.74228e-08, 0, -1, -0.0416422, -1.14071, 0 )
 text = "
 You may now close the game

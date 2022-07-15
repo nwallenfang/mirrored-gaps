@@ -25,7 +25,8 @@ func set_image(im):
 	$SplashCover.material_override.set("shader_param/texture_albedo", texture)
 
 func load_disk_from_file(disk_number):
-	var file_name = "res://Disks/" + str(disk_number) + ".png"
+	var folder = "res://Disks/" if not Game.hard_levels else "res://Disks/Hard/"
+	var file_name = folder + str(disk_number) + ".png"
 	var image_loaded = load(file_name)
 	set_image(image_loaded)
 
