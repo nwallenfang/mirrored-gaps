@@ -38,6 +38,7 @@ far = 200.0
 transform = Transform( 1, 0, 0, 0, 1, 0, 0, 0, 1, 0, 0, 53.6764 )
 
 [node name="Symmetrizer" parent="." instance=ExtResource( 4 )]
+visible = true
 
 [node name="DiskDetectionArea" type="Area" parent="."]
 transform = Transform( 1, 0, 0, 0, 1, 0, 0, 0, 1, 0, 0, -97.5275 )

@@ -16,7 +16,7 @@ var speed_lines
 
 var speed := 12.0 # meter / second
 var speed_backup := -1.0
-var start_speed := 8.0
+var start_speed := 7.0
 var accel := 0.0#.7
 
 var current_tries := 0
