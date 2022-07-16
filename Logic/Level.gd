@@ -50,7 +50,7 @@ func spawn_disk():
 	$Disks.add_child(disk)
 	disk.global_transform.origin = $DiskSpawnPosition.global_transform.origin
 	var tutorial_dict = Game.tutorials if not Game.hard_levels else Game.hard_tutorials
-	if disk.number in tutorial_dict:
+	if disk.number in tutorial_dict and Game.current_tries <= 3:
 		var tutorial = TUTORIAL.instance()
 		tutorial.initialize(disk, tutorial_dict[disk.number])
 	if Game.current_disk == null:
