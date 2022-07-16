@@ -69,6 +69,10 @@ shader_param/scanline_width = 0.03
 
 [node name="Tunnel" type="Spatial"]
 script = ExtResource( 2 )
+group1_color_bg = Color( 0.231373, 0.372549, 0.701961, 1 )
+group2_color_bg = Color( 0.709804, 0.788235, 0.301961, 1 )
+group3_color_bg = Color( 1, 0.466667, 0.239216, 1 )
+group4_color_bg = Color( 1, 0.0509804, 0.87451, 1 )
 
 [node name="Mesh" type="MeshInstance" parent="."]
 transform = Transform( -13.891, -2.01443e-12, 1.21439e-06, -1.21439e-06, 2.30424e-05, -13.891, 0, -527.148, -6.07195e-07, 0, 0, 0 )
