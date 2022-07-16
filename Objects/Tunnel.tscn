@@ -58,7 +58,7 @@ shader_param/scanline_width = 0.03
 
 [sub_resource type="ShaderMaterial" id=5]
 shader = SubResource( 3 )
-shader_param/albedo = Color( 1, 1, 1, 1 )
+shader_param/albedo = Color( 0.427451, 0.427451, 0.427451, 1 )
 shader_param/uv1_scale = Vector3( 1, 1, 1 )
 shader_param/uv1_offset = Vector3( 0, 0, 0 )
 shader_param/uv2_scale = Vector3( 1, 1, 1 )
