@@ -28,6 +28,8 @@ var speedup_speed = 65.0
 var super_speedup_speed = 110.0
 var speedup_active = false setget set_speedup_active
 
+var set_next_tunnel_color_without_transition = false
+
 var tutorials := {
 	1: "Press SPACE\nto create symmetry",
 	2: "Press Q/E\nto rotate the axis",
@@ -108,7 +110,7 @@ func set_current_disk(disk: Disk):
 		symmetrizer.cursor.translation = level_data[3]
 	if level_data[4] != null:
 		symmetrizer.cursor.rotation_degrees.z = level_data[4]
-		
+
 func set_speedup_active(active: bool):
 	if active != speedup_active:
 		if active:

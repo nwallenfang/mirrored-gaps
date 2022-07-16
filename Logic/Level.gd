@@ -73,6 +73,7 @@ func sphere_collided(disk):
 	
 	yield(Fade.fade_out(0.3), "finished")
 	Game.set_speedup_active(false)
+	Game.set_next_tunnel_color_without_transition = true
 	get_tree().change_scene("res://Logic/Level.tscn")
 	Fade.fade_in(0.2)
 	

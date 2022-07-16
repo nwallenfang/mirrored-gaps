@@ -53,7 +53,11 @@ func set_levels_done(_levels_done):
 					group.get_node("Progress").set("custom_colors/font_color", group2_color)
 				3:
 					group.get_node("Progress").set("custom_colors/font_color", group3_color)
-			Game.tunnel.set_color_with_transition(index)
+			if Game.set_next_tunnel_color_without_transition:
+				Game.tunnel.set_color_without_transition(index)
+				Game.set_next_tunnel_color_without_transition = false
+			else:
+				Game.tunnel.set_color_with_transition(index)
 			break
 	
 	group.get_node("Progress").text = "%02d" % levels_done
