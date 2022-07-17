@@ -40,6 +40,7 @@ func load_hard_levels():
 	get_tree().change_scene("res://Logic/Level.tscn")
 	Fade.fade_in(0.2)
 
+var first_spawn := true
 func spawn_disk():
 	if Game.disk_number > Game.level_count:
 		return
@@ -54,16 +55,20 @@ func spawn_disk():
 	
 	$Disks.add_child(disk)
 	disk.global_transform.origin = $DiskSpawnPosition.global_transform.origin
+	if first_spawn:
+		disk.global_transform.origin.z -= 30
 	var tutorial_dict = Game.tutorials if not Game.hard_levels else Game.hard_tutorials
 	
 	
-	if disk.number in tutorial_dict and Game.current_tries <= 3:
+	if disk.number in tutorial_dict and (Game.current_tries <= 3 or not first_spawn):
 		var tutorial = TUTORIAL.instance()
 		tutorial.initialize(disk, tutorial_dict[disk.number])
 	if Game.current_disk == null:
 		Game.current_disk = disk
 		if $UI.levels_done == 0:
 			$UI.set_levels_done(disk.number-1)
+			
+	first_spawn = false
 
 
 func sphere_collided(disk):

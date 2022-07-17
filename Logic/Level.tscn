@@ -42,7 +42,7 @@ far = 200.0
 [node name="Disks" type="Node" parent="."]
 
 [node name="DiskSpawnPosition" type="Position3D" parent="."]
-transform = Transform( 1, 0, 0, 0, 1, 0, 0, 0, 1, 0, 0, 53.6764 )
+transform = Transform( 1, 0, 0, 0, 1, 0, 0, 0, 1, 0, 0, 84.1195 )
 
 [node name="Symmetrizer" parent="." instance=ExtResource( 4 )]
 visible = true
