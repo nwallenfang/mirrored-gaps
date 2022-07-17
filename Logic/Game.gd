@@ -136,6 +136,7 @@ const color_faded_out = Color("ffffffff")
 signal faded_out
 signal faded_back_in
 func fade_out_and_in():
+	$CanvasLayer/ColorRect.rect_size = get_viewport().size
 	$FadeTween.reset_all()
 	$FadeTween.interpolate_property($CanvasLayer/ColorRect, "modulate", color_faded_in, color_faded_out, 0.23)
 	$FadeTween.start()

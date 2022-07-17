@@ -12,6 +12,7 @@ func _ready() -> void:
 	#$SpeedLines/MeshInstance.material_override.set("shader_param/albedo", Color.transparent)
 	Game.speed = Game.start_speed
 	Game.sphere = $Sphere
+	
 
 var spawn_dist := 140.0
 var next_spawn := 0.0
@@ -86,11 +87,19 @@ func sphere_collided(disk):
 	get_tree().change_scene("res://Logic/Level.tscn")
 	yield(Game, "faded_back_in")
 
+#func change_fog():
+#	# fog should expand after the first level to prevent pop-in
+#	$Tween.reset_all()
+#	$Tween.interpolate_property($WorldEnvironment.environment, "fog_depth_begin", 150.0, 90.0, 1.0)
+#	$Tween.interpolate_property($WorldEnvironment.environment, "fog_depth_end", 220.0, 170.0, 1.0)
+#	$Tween.start()
+	
 
 func sphere_passed(disk):
 	Game.current_tries = 0
 	if disk.number != 1:
 		$SpherePassedSound.play()
+
 	if $Disks.get_child_count() == 1:
 		print('no new disk to set')
 		Game.current_disk = null
