@@ -6,7 +6,6 @@ func _ready() -> void:
 	set_roll_speed(1.5)
 
 func destroy_animation():
-	$CollisionSound.play()
 	$Mesh.visible = false
 	$Particles.emitting = true
 

@@ -1,0 +1,15 @@
+[remap]
+
+importer="ogg_vorbis"
+type="AudioStreamOGGVorbis"
+path="res://.import/apply_symmetry_placeholder.ogg-1ea21a03669d75d93f6da39b6bea791e.oggstr"
+
+[deps]
+
+source_file="res://Assets/Sounds/apply_symmetry_placeholder.ogg"
+dest_files=[ "res://.import/apply_symmetry_placeholder.ogg-1ea21a03669d75d93f6da39b6bea791e.oggstr" ]
+
+[params]
+
+loop=true
+loop_offset=0

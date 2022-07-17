@@ -149,5 +149,3 @@ pixel_size = 0.025
 modulate = Color( 1, 1, 1, 0.533333 )
 text = "1"
 font = SubResource( 8 )
-
-[node name="CollisionSound" type="AudioStreamPlayer" parent="."]

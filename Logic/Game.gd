@@ -39,6 +39,26 @@ var hard_tutorials := {
 	1: "So you want more?",
 }
 
+func _ready() -> void:
+	# wait for a bit before starting music
+	pass
+
+
+func initial_main_theme_start():
+	$MainTheme1.play()
+#	$SoundTween.reset_all()
+#	$SoundTween.interpolate_property($MainTheme1, "volume_db", -80, -10, 1.0)
+#	$SoundTween.start()
+	
+func switch_to_second_theme():
+	$SoundTween.reset_all()
+	$SoundTween.interpolate_property($MainTheme1, "volume_db", -10, -80, 2.0)
+	$SoundTween.interpolate_property($MainTheme2, "volume_db", -45, -10, 2.0)
+	$SoundTween.start()
+	$MainTheme2.play()
+	yield($SoundTween, "tween_all_completed")
+	$MainTheme1.stop()
+
 var level_data_dict := { #symm count, can_rotate, can_move, cursor_reset_location, cursor_reset_rotation
 	1: [1, false, false, null, null],
 	2: [1, true, false, null, null],
@@ -118,6 +138,10 @@ func set_speedup_active(active: bool):
 			$Tween.interpolate_property(self.speed_lines.get_node("MeshInstance").material_override, "shader_param/albedo", Color.transparent, Color.white, 1.5)
 			$Tween.interpolate_method(sphere, "set_roll_speed", 1.5, 4.0, 1.0)
 			$Tween.start()
+			var pitch_strength = 0.1
+			AudioServer.get_bus_effect(1, 1).wet = 0.3 + ((randf() - 0.5) * pitch_strength)
+			$SpeedupSound.play()
+			
 		else:
 			$Tween.remove_all()
 			$Tween.interpolate_property(self, "speed", speed, start_speed, 0.8, Tween.TRANS_QUAD, Tween.EASE_IN_OUT)

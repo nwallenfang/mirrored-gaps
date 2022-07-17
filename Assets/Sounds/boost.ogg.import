@@ -11,5 +11,5 @@ dest_files=[ "res://.import/boost.ogg-d7be8336d9a692fba9c201f4188a0ed5.oggstr" ]
 
 [params]
 
-loop=true
+loop=false
 loop_offset=0

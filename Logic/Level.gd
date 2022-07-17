@@ -47,9 +47,15 @@ func spawn_disk():
 	disk.name = "Disk" + str(Game.disk_number)
 	disk.load_disk_from_file(Game.disk_number)
 	Game.disk_number += 1
+	
+#	if Game.disk_number == 2:
+#		Game.initial_main_theme_start()
+	
 	$Disks.add_child(disk)
 	disk.global_transform.origin = $DiskSpawnPosition.global_transform.origin
 	var tutorial_dict = Game.tutorials if not Game.hard_levels else Game.hard_tutorials
+	
+	
 	if disk.number in tutorial_dict and Game.current_tries <= 3:
 		var tutorial = TUTORIAL.instance()
 		tutorial.initialize(disk, tutorial_dict[disk.number])
@@ -60,6 +66,7 @@ func spawn_disk():
 
 
 func sphere_collided(disk):
+	$SphereCollidedSound.play()
 	Game.current_tries += 1
 	Game.stop_speedlines_fast()
 	var killer_disk_number = disk.number
@@ -78,12 +85,20 @@ func sphere_collided(disk):
 	
 func sphere_passed(disk):
 	Game.current_tries = 0
+	if disk.number != 1:
+		$SpherePassedSound.play()
 	if $Disks.get_child_count() == 1:
 		print('no new disk to set')
 		Game.current_disk = null
 	else:
 		Game.current_disk = $Disks.get_node("Disk" + str(disk.number + 1))#$Disks.get_child(1)
 	$UI.set_levels_done(disk.number)
+	# hard coded theme changes
+	if disk.number == 1:
+		Game.initial_main_theme_start()
+	if disk.number == 13:
+		Game.switch_to_second_theme()
+		
 	if disk.number == Game.level_count:
 		if not Game.hard_levels:
 			$WinText.visible = true

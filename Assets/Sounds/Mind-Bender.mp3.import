@@ -1,0 +1,15 @@
+[remap]
+
+importer="mp3"
+type="AudioStreamMP3"
+path="res://.import/Mind-Bender.mp3-6cb30152f9e6eb9e14eee071629e346b.mp3str"
+
+[deps]
+
+source_file="res://Assets/Sounds/Mind-Bender.mp3"
+dest_files=[ "res://.import/Mind-Bender.mp3-6cb30152f9e6eb9e14eee071629e346b.mp3str" ]
+
+[params]
+
+loop=true
+loop_offset=0

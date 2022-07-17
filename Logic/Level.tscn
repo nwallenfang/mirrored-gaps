@@ -1,4 +1,4 @@
-[gd_scene load_steps=12 format=2]
+[gd_scene load_steps=14 format=2]
 
 [ext_resource path="res://Objects/Sphere.tscn" type="PackedScene" id=1]
 [ext_resource path="res://Objects/Tunnel.tscn" type="PackedScene" id=2]
@@ -9,6 +9,8 @@
 [ext_resource path="res://Objects/SpeedLines.tscn" type="PackedScene" id=7]
 [ext_resource path="res://Assets/Materials/EnvironmentSky.tres" type="Environment" id=8]
 [ext_resource path="res://UI/iosevka-extended-regular.ttf" type="DynamicFontData" id=9]
+[ext_resource path="res://Assets/Sounds/collided.ogg" type="AudioStream" id=10]
+[ext_resource path="res://Assets/Sounds/success.ogg" type="AudioStream" id=11]
 
 [sub_resource type="BoxShape" id=2]
 extents = Vector3( 1, 1, 1.23915 )
@@ -67,9 +69,9 @@ font = ExtResource( 6 )
 [node name="Label3D2" type="Label3D" parent="WinText"]
 transform = Transform( -1, 0, -8.74228e-08, 0, 1, 0, 8.74228e-08, 0, -1, -0.0416422, -1.75327, 0 )
 text = "
-You may now close the game
-or press X to enter the
-hard levels."
+You could end it here
+or press X to enter
+harder levels."
 font = ExtResource( 6 )
 
 [node name="WinTextHard" type="Spatial" parent="."]
@@ -100,6 +102,14 @@ visible = false
 pixel_size = 0.038
 text = "1"
 font = SubResource( 3 )
+
+[node name="SpherePassedSound" type="AudioStreamPlayer" parent="."]
+stream = ExtResource( 11 )
+volume_db = -15.0
+
+[node name="SphereCollidedSound" type="AudioStreamPlayer" parent="."]
+stream = ExtResource( 10 )
+volume_db = -8.0
 
 [connection signal="area_entered" from="DiskDetectionArea" to="." method="_on_DiskDetectionArea_area_entered"]
 
