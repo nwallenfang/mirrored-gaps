@@ -87,5 +87,15 @@ func splash_end(im):
 	$YellowTween.interpolate_property($SplashYellow.material_override, "shader_param/transparent", 1.0, 0.0, .2)
 	$YellowTween.start()
 	yield($YellowTween,"tween_all_completed")
+	$SplashTween.reset_all()
+	$SplashTween.interpolate_property($SplashYellow.material_override, "shader_param/modulate", 1.0, 0.0, .25)
+	$SplashTween.interpolate_property($SplashCover.material_override, "shader_param/modulate", 1.0, 0.0, .25)
+	$SplashTween.start()
+	yield($SplashTween, "tween_all_completed")
+	
+
 	$SplashCover.visible = false
 	$SplashYellow.visible = false
+	
+	$SplashYellow.material_override.set("shader_param/modulate", 1.0)
+	$SplashCover.material_override.set("shader_param/modulate", 1.0)

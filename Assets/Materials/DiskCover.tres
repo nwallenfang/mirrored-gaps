@@ -21,4 +21,5 @@ shader_param/splash_progress = -0.019
 shader_param/colors_inverted = null
 shader_param/color_left = Color( 0.835294, 0.45098, 0.0823529, 1 )
 shader_param/color_right = Color( 0.176471, 0.184314, 0.611765, 1 )
+shader_param/modulate = 1.0
 shader_param/texture_albedo = ExtResource( 1 )

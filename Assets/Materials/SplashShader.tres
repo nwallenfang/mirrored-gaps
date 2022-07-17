@@ -23,6 +23,8 @@ uniform bool colors_inverted;
 uniform vec4 color_left: hint_color;
 uniform vec4 color_right: hint_color;
 
+uniform float modulate: hint_range(0.0, 1.0, 0.1) = 1.0;
+
 void vertex() {
 	UV=UV*uv1_scale.xy+uv1_offset.xy;
 }
@@ -38,6 +40,6 @@ void fragment() {
 	METALLIC = metallic;
 	ROUGHNESS = roughness;
 	SPECULAR = specular;
-	ALPHA = albedo.a * albedo_tex.a * albedo_tex.r;
+	ALPHA = modulate * albedo.a * albedo_tex.a * albedo_tex.r;
 }
 "

@@ -70,8 +70,8 @@ func symmetrize_done(result):
 	yield(get_tree().create_timer(.3),"timeout")
 	currently_symmetrizing = false
 
-var cursor_speed_pixels := 200.0
-var cursor_speed_rotation_degrees := 75.0
+var cursor_speed_pixels := 180.0
+var cursor_speed_rotation_degrees := 72.0
 var cursor_max_distance := 12.2
 func _physics_process(delta):
 	if victory_animation:

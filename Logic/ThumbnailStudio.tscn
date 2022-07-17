@@ -1,13 +1,90 @@
-[gd_scene load_steps=12 format=2]
+[gd_scene load_steps=37 format=2]
 
-[ext_resource path="res://Objects/Disk.gd" type="Script" id=1]
+[ext_resource path="res://UI/iosevka-extended-regular.ttf" type="DynamicFontData" id=1]
 [ext_resource path="res://Assets/Materials/SplashShader.tres" type="Shader" id=2]
 [ext_resource path="res://Assets/Materials/yellow.tres" type="Shader" id=3]
 [ext_resource path="res://Assets/Materials/DiskShader.tres" type="Shader" id=4]
 [ext_resource path="res://testlevel.png" type="Texture" id=5]
-[ext_resource path="res://Objects/Tunnel.tscn" type="PackedScene" id=6]
+[ext_resource path="res://Assets/Materials/SphereMaterial.tres" type="Material" id=6]
+[ext_resource path="res://Assets/Sprites/grid.png" type="Texture" id=7]
+[ext_resource path="res://Assets/Sprites/OrbSpace.png" type="Texture" id=8]
+[ext_resource path="res://Assets/Materials/TunnelMaterial.tres" type="Material" id=9]
+[ext_resource path="res://Assets/Materials/EnvironmentSky.tres" type="Environment" id=10]
+[ext_resource path="res://UI/thumbnail_font.tres" type="DynamicFont" id=11]
+[ext_resource path="res://Logic/Symmetrizer.gd" type="Script" id=12]
+[ext_resource path="res://Logic/ThumbnailStudio.gd" type="Script" id=13]
 
-[sub_resource type="ShaderMaterial" id=3]
+[sub_resource type="CylinderMesh" id=1]
+flip_faces = true
+height = 1.0
+radial_segments = 32
+rings = 1
+
+[sub_resource type="CubeMesh" id=2]
+
+[sub_resource type="Shader" id=3]
+code = "// NOTE: Shader automatically converted from Godot Engine 3.5.rc6's SpatialMaterial.
+
+shader_type spatial;
+render_mode async_visible,blend_mix,depth_draw_opaque,cull_back,diffuse_burley,specular_schlick_ggx;
+uniform vec4 albedo : hint_color;
+uniform sampler2D texture_albedo : hint_albedo;
+
+uniform vec3 uv1_scale;
+uniform vec3 uv1_offset;
+uniform vec3 uv2_scale;
+uniform vec3 uv2_offset;
+
+uniform float symm_progress: hint_range(-1, 0);
+uniform vec4 scanline_color: hint_color;
+uniform float scanline_width = 0.1;
+
+void vertex() {
+	UV=UV*uv1_scale.xy+uv1_offset.xy;
+}
+
+
+void fragment() {
+	float scanline = smoothstep(0.5 - scanline_width, 0.5, UV.y + 0.5 * symm_progress) 
+			* (1.0 - smoothstep(0.5, 0.5 + scanline_width, UV.y + 0.5 * symm_progress));
+	
+	vec2 base_uv = UV;
+	vec4 albedo_tex = texture(texture_albedo,base_uv);
+	vec3 scanline_rgb = scanline * scanline_color.rgb;
+	ALBEDO = clamp(albedo_tex.rgb * albedo.rgb + scanline_rgb, 0.0, 1.0);
+
+}
+"
+
+[sub_resource type="ShaderMaterial" id=4]
+shader = SubResource( 3 )
+shader_param/albedo = Color( 0.141176, 0.141176, 0.141176, 1 )
+shader_param/uv1_scale = Vector3( 1, 1, 1 )
+shader_param/uv1_offset = Vector3( 0, 0, 0 )
+shader_param/uv2_scale = Vector3( 1, 1, 1 )
+shader_param/uv2_offset = Vector3( 0, 0, 0 )
+shader_param/symm_progress = -1.0
+shader_param/scanline_color = Color( 1, 1, 1, 1 )
+shader_param/scanline_width = 0.03
+
+[sub_resource type="ShaderMaterial" id=5]
+shader = SubResource( 3 )
+shader_param/albedo = Color( 0.427451, 0.427451, 0.427451, 1 )
+shader_param/uv1_scale = Vector3( 1, 1, 1 )
+shader_param/uv1_offset = Vector3( 0, 0, 0 )
+shader_param/uv2_scale = Vector3( 1, 1, 1 )
+shader_param/uv2_offset = Vector3( 0, 0, 0 )
+shader_param/symm_progress = -1.0
+shader_param/scanline_color = Color( 1, 1, 1, 1 )
+shader_param/scanline_width = 0.03
+
+[sub_resource type="OpenSimplexNoise" id=7]
+
+[sub_resource type="NoiseTexture" id=8]
+seamless = true
+noise = SubResource( 7 )
+
+[sub_resource type="ShaderMaterial" id=21]
 resource_local_to_scene = true
 shader = ExtResource( 4 )
 shader_param/albedo = Color( 1, 1, 1, 1 )
@@ -21,16 +98,19 @@ shader_param/uv2_scale = Vector3( 1, 1, 1 )
 shader_param/uv2_offset = Vector3( 0, 0, 0 )
 shader_param/cursor = Vector2( 0.3, 0.5 )
 shader_param/cursor_normal = Vector2( 1, 0 )
-shader_param/splash_progress = 0.2
-shader_param/color1 = null
-shader_param/color2 = null
-shader_param/noise_speed = 0.33
+shader_param/splash_progress = 0.543
+shader_param/color1 = Color( 1, 1, 1, 1 )
+shader_param/color2 = Color( 1, 1, 1, 1 )
+shader_param/noise_speed = 0.15
 shader_param/scroll_dir = Vector2( 0, 1 )
+shader_param/noise_scale = 3.5
 shader_param/offset = null
 shader_param/scale = null
 shader_param/texture_albedo = ExtResource( 5 )
+shader_param/texture_albedo2 = ExtResource( 7 )
+shader_param/texture_noise = SubResource( 8 )
 
-[sub_resource type="ShaderMaterial" id=4]
+[sub_resource type="ShaderMaterial" id=10]
 resource_local_to_scene = true
 shader = ExtResource( 3 )
 shader_param/albedo = Color( 0, 0, 0, 1 )
@@ -51,7 +131,7 @@ shader_param/fade_to_yellow = 1.0
 shader_param/transparent = 1.0
 shader_param/texture_albedo = ExtResource( 5 )
 
-[sub_resource type="ShaderMaterial" id=5]
+[sub_resource type="ShaderMaterial" id=11]
 resource_local_to_scene = true
 shader = ExtResource( 2 )
 shader_param/albedo = Color( 1, 1, 1, 1 )
@@ -65,42 +145,184 @@ shader_param/uv2_scale = Vector3( 1, 1, 1 )
 shader_param/uv2_offset = Vector3( 0, 0, 0 )
 shader_param/cursor = Vector2( 0.5, 0.5 )
 shader_param/cursor_normal = Vector2( 1, -0.43 )
-shader_param/splash_progress = 0.099
+shader_param/splash_progress = -0.019
 shader_param/colors_inverted = null
 shader_param/color_left = Color( 0.835294, 0.45098, 0.0823529, 1 )
-shader_param/color_right = Color( 0.1769, 0.184118, 0.61, 1 )
+shader_param/color_right = Color( 0.176471, 0.184314, 0.611765, 1 )
 shader_param/texture_albedo = ExtResource( 5 )
 
-[sub_resource type="BoxShape" id=2]
+[sub_resource type="BoxShape" id=12]
 
-[sub_resource type="Environment" id=6]
-ambient_light_color = Color( 1, 1, 1, 1 )
+[sub_resource type="SphereMesh" id=13]
+
+[sub_resource type="Shader" id=14]
+code = "// NOTE: Shader automatically converted from Godot Engine 3.5.rc6's SpatialMaterial.
+
+shader_type spatial;
+render_mode async_visible,blend_mix,depth_draw_opaque,cull_back,diffuse_burley,specular_schlick_ggx;
+uniform vec4 albedo : hint_color;
+uniform sampler2D texture_albedo : hint_albedo;
+uniform float specular;
+uniform float metallic;
+uniform float roughness : hint_range(0,1);
+uniform float point_size : hint_range(0,128);
+uniform vec3 uv1_scale;
+uniform vec3 uv1_offset;
+uniform vec3 uv2_scale;
+uniform vec3 uv2_offset;
+uniform vec4 fresnel_color : hint_color;
+
+float fresnel(float amount, vec3 normal, vec3 view)
+{
+	return pow((1.0 - clamp(dot(normalize(normal), normalize(view)), 0.0, 1.0 )), amount);
+}
+
+void vertex() {
+	UV=UV*uv1_scale.xy+uv1_offset.xy;
+}
+
+
+void fragment() {
+	vec2 base_uv = UV;
+	vec4 albedo_tex = texture(texture_albedo,base_uv);
+	float basic_fresnel = fresnel(3.0, NORMAL, VIEW);
+	ALBEDO = albedo.rgb * albedo_tex.rgb;
+	//METALLIC = 1.0;
+	ROUGHNESS = .1;
+	//ALPHA = .5;
+	EMISSION = .7 * ALBEDO * float (length(ALBEDO) > .5);
+	ALBEDO = mix(ALBEDO , fresnel_color.rgb, basic_fresnel);
+}
+"
+
+[sub_resource type="ShaderMaterial" id=15]
+shader = SubResource( 14 )
+shader_param/albedo = Color( 1, 1, 1, 1 )
+shader_param/specular = 0.0
+shader_param/metallic = 0.0
+shader_param/roughness = 1.0
+shader_param/point_size = 1.0
+shader_param/uv1_scale = Vector3( 2, 1, 1 )
+shader_param/uv1_offset = Vector3( 0, 0, 0 )
+shader_param/uv2_scale = Vector3( 0, 1, 1 )
+shader_param/uv2_offset = Vector3( 0, 0, 0 )
+shader_param/fresnel_color = Color( 0.0784314, 0.792157, 1, 1 )
+shader_param/texture_albedo = ExtResource( 8 )
+
+[sub_resource type="Animation" id=16]
+length = 0.001
+tracks/0/type = "value"
+tracks/0/path = NodePath("Mesh:rotation_degrees")
+tracks/0/interp = 1
+tracks/0/loop_wrap = true
+tracks/0/imported = false
+tracks/0/enabled = true
+tracks/0/keys = {
+"times": PoolRealArray( 0 ),
+"transitions": PoolRealArray( 1 ),
+"update": 0,
+"values": [ Vector3( -180, 0, 0 ) ]
+}
+
+[sub_resource type="Animation" id=17]
+resource_name = "Roll"
+length = 2.0
+loop = true
+tracks/0/type = "transform"
+tracks/0/path = NodePath("Mesh")
+tracks/0/interp = 1
+tracks/0/loop_wrap = true
+tracks/0/imported = false
+tracks/0/enabled = true
+tracks/0/keys = PoolRealArray(  )
+tracks/1/type = "value"
+tracks/1/path = NodePath("Mesh:rotation_degrees")
+tracks/1/interp = 1
+tracks/1/loop_wrap = true
+tracks/1/imported = false
+tracks/1/enabled = true
+tracks/1/keys = {
+"times": PoolRealArray( 0, 1, 2 ),
+"transitions": PoolRealArray( 1, 1, 1 ),
+"update": 0,
+"values": [ Vector3( 0, 0, 90 ), Vector3( 180, 0, 90 ), Vector3( 360, 0, 90 ) ]
+}
+
+[sub_resource type="SphereMesh" id=18]
+material = ExtResource( 6 )
+
+[sub_resource type="Curve" id=19]
+_data = [ Vector2( 0, 0.972727 ), 0.0, 0.0, 0, 0, Vector2( 1, 0 ), -3.06061, 0.0, 0, 0 ]
+
+[sub_resource type="DynamicFont" id=20]
+size = 110
+font_data = ExtResource( 1 )
+
+[sub_resource type="SpatialMaterial" id=22]
+flags_unshaded = true
+albedo_color = Color( 1, 0, 0, 1 )
+
+[sub_resource type="CubeMesh" id=23]
+material = SubResource( 22 )
+
+[sub_resource type="SpatialMaterial" id=24]
+flags_unshaded = true
+albedo_color = Color( 1, 0, 0, 1 )
+
+[sub_resource type="SphereMesh" id=25]
+material = SubResource( 24 )
 
 [node name="ThumbnailStudio" type="Spatial"]
+transform = Transform( 1, 0, 0, 0, 1, 0, 0, 0, 1, 0.0586205, -0.0590019, -0.00853348 )
+script = ExtResource( 13 )
 
-[node name="Tunnel" parent="." instance=ExtResource( 6 )]
+[node name="Tunnel" type="Spatial" parent="."]
+
+[node name="Mesh" type="MeshInstance" parent="Tunnel"]
+transform = Transform( -13.891, -2.01443e-12, 1.21439e-06, -1.21439e-06, 2.30424e-05, -13.891, 0, -527.148, -6.07195e-07, 0, 0, 0 )
+mesh = SubResource( 1 )
+material/0 = ExtResource( 9 )
+
+[node name="Floor" type="MeshInstance" parent="Tunnel"]
+transform = Transform( 4.06511, 2.28079e-08, -2.23343e-05, 3.55383e-07, -0.260892, 0, -3.55383e-07, -1.99393e-15, -255.475, 0, -13.5362, 0 )
+mesh = SubResource( 2 )
+material/0 = SubResource( 4 )
+
+[node name="Floor2" type="MeshInstance" parent="Tunnel"]
+transform = Transform( 0.356618, 2.00086e-09, -1.95931e-06, 3.55383e-07, -0.260892, 0, -3.55383e-07, -1.99393e-15, -255.475, 3.7, -13.316, 0 )
+mesh = SubResource( 2 )
+material/0 = SubResource( 5 )
+
+[node name="Floor3" type="MeshInstance" parent="Tunnel"]
+transform = Transform( 0.356618, 2.00086e-09, -1.95931e-06, 3.55383e-07, -0.260892, 0, -3.55383e-07, -1.99393e-15, -255.475, -3.7, -13.316, 0 )
+mesh = SubResource( 2 )
+material/0 = SubResource( 5 )
+
+[node name="Tween" type="Tween" parent="Tunnel"]
+
+[node name="Camera" type="Camera" parent="."]
+transform = Transform( -0.964207, 0, 0.265152, 0, 1, 0, -0.265152, 0, -0.964207, 7.93607, -1.17066, -21.929 )
 
 [node name="Disk" type="Spatial" parent="."]
-transform = Transform( 1, 0, 0, 0, 1, 0, 0, 0, 0.139809, 0, 0, 0 )
-script = ExtResource( 1 )
+transform = Transform( -1, 8.74228e-08, 0, -8.74228e-08, -1, 0, 0, 0, 0.139809, 0, 0, 0 )
 
 [node name="Sprite3D" type="Sprite3D" parent="Disk"]
 transform = Transform( -1, 0, -1.22225e-08, 0, 1, 0, 6.25299e-07, 0, -1, 0, 0, 0 )
-material_override = SubResource( 3 )
+material_override = SubResource( 21 )
 pixel_size = 0.0542
 texture = ExtResource( 5 )
 
 [node name="SplashYellow" type="Sprite3D" parent="Disk"]
 transform = Transform( -1, 0, -1.22225e-08, 0, 1, 0, 6.25299e-07, 0, -1, 0, 0, -1 )
 visible = false
-material_override = SubResource( 4 )
+material_override = SubResource( 10 )
 pixel_size = 0.0542
 texture = ExtResource( 5 )
 
 [node name="SplashCover" type="Sprite3D" parent="Disk"]
 transform = Transform( -1, 0, -1.22225e-08, 0, 1, 0, 6.25299e-07, 0, -1, 0, 0, -2 )
 visible = false
-material_override = SubResource( 5 )
+material_override = SubResource( 11 )
 pixel_size = 0.0542
 texture = ExtResource( 5 )
 
@@ -108,7 +330,7 @@ texture = ExtResource( 5 )
 
 [node name="CollisionShape" type="CollisionShape" parent="Disk/Hitbox"]
 transform = Transform( 13.8502, 0, 0, 0, 13.8502, 0, 0, 0, 2.68514, 0, 0, 0 )
-shape = SubResource( 2 )
+shape = SubResource( 12 )
 
 [node name="Tween" type="Tween" parent="Disk"]
 
@@ -116,8 +338,79 @@ shape = SubResource( 2 )
 
 [node name="SplashTween" type="Tween" parent="Disk"]
 
-[node name="Camera" type="Camera" parent="."]
-transform = Transform( -1, 0, -8.74228e-08, 0, 1, 0, 8.74228e-08, 0, -1, 0, 0, -32.9199 )
+[node name="Sphere" type="Spatial" parent="."]
+transform = Transform( 1.17523, 0, -0.880436, -0.223388, 1.4204, -0.298186, 0.851625, 0.372581, 1.13678, 0, -11.1675, -4.46107 )
 
-[node name="WorldEnvironment" type="WorldEnvironment" parent="."]
-environment = SubResource( 6 )
+[node name="Mesh" type="MeshInstance" parent="Sphere"]
+transform = Transform( 1.72723, 0, 0, 0, -1.72723, -1.50999e-07, 0, 1.50999e-07, -1.72723, 0, 0, 0 )
+mesh = SubResource( 13 )
+material/0 = SubResource( 15 )
+
+[node name="Animation" type="AnimationPlayer" parent="Sphere"]
+playback_speed = 2.0
+anims/RESET = SubResource( 16 )
+anims/Roll = SubResource( 17 )
+
+[node name="Particles" type="CPUParticles" parent="Sphere"]
+emitting = false
+amount = 24
+lifetime = 2.0
+one_shot = true
+speed_scale = 1.5
+explosiveness = 0.95
+mesh = SubResource( 18 )
+emission_shape = 1
+emission_sphere_radius = 1.0
+direction = Vector3( 0, 1, 0 )
+spread = 46.45
+initial_velocity = 11.75
+initial_velocity_random = 0.48
+scale_amount = 0.3
+scale_amount_random = 0.71
+scale_amount_curve = SubResource( 19 )
+
+[node name="SymmetrizesLeft" type="Label3D" parent="Sphere"]
+transform = Transform( -1, 0, -8.74228e-08, 0, 1, 0, 8.74228e-08, 0, -1, 0, 0.962087, -1.78843 )
+visible = false
+pixel_size = 0.025
+modulate = Color( 1, 1, 1, 0.533333 )
+text = "1"
+font = SubResource( 20 )
+
+[node name="WorldEnvironment2" type="WorldEnvironment" parent="."]
+environment = ExtResource( 10 )
+
+[node name="OmniLight" type="OmniLight" parent="."]
+transform = Transform( 1, 0, 0, 0, 1, 0, 0, 0, 1, 2.38806, 1.46784, -12.944 )
+light_color = Color( 0.592157, 0.886275, 1, 1 )
+light_energy = 1.862
+omni_range = 18.714
+
+[node name="Label3D" type="Label3D" parent="."]
+transform = Transform( -1, 0, -8.74228e-08, 0, 1, 0, 8.74228e-08, 0, -1, 3.27757, 0.681534, -1.3488 )
+modulate = Color( 0, 0, 0, 1 )
+text = "Mirrored
+"
+font = ExtResource( 11 )
+
+[node name="Label3D2" type="Label3D" parent="."]
+transform = Transform( -1, -1.03755e-10, -8.74227e-08, 0, 0.999999, -0.00118682, 8.74228e-08, -0.00118682, -0.999999, -1.72023, -0.0854216, -1.38881 )
+modulate = Color( 0, 0, 0, 1 )
+outline_modulate = Color( 1, 1, 1, 1 )
+text = "
+Gaps"
+font = ExtResource( 11 )
+
+[node name="Symmetrizer" type="Spatial" parent="."]
+transform = Transform( 1, 0, 0, 0, 1, 0, 0, 0, 1, 0, 0.207343, -0.329567 )
+script = ExtResource( 12 )
+
+[node name="Cursor" type="Spatial" parent="Symmetrizer"]
+
+[node name="MeshInstance" type="MeshInstance" parent="Symmetrizer/Cursor"]
+transform = Transform( 36.4773, 0, 0, 0, 0.18877, 0, 0, 0, 0.18877, 0, 0, 0 )
+mesh = SubResource( 23 )
+skeleton = NodePath("../..")
+
+[node name="Ball" type="MeshInstance" parent="Symmetrizer/Cursor"]
+mesh = SubResource( 25 )
