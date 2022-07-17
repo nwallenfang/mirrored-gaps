@@ -131,6 +131,23 @@ func set_current_disk(disk: Disk):
 	if level_data[4] != null:
 		symmetrizer.cursor.rotation_degrees.z = level_data[4]
 
+const color_faded_in = Color("00ffffff")
+const color_faded_out = Color("ffffffff")
+signal faded_out
+signal faded_back_in
+func fade_out_and_in():
+	$FadeTween.reset_all()
+	$FadeTween.interpolate_property($CanvasLayer/ColorRect, "modulate", color_faded_in, color_faded_out, 0.23)
+	$FadeTween.start()
+	yield($FadeTween, "tween_all_completed")
+	emit_signal("faded_out")
+	$FadeTween.reset_all()
+	$FadeTween.interpolate_property($CanvasLayer/ColorRect, "modulate", color_faded_out, color_faded_in, 0.12)
+	$FadeTween.start()
+	yield($FadeTween, "tween_all_completed")
+	emit_signal("faded_back_in")
+	
+
 func set_speedup_active(active: bool):
 	if active != speedup_active:
 		if active:

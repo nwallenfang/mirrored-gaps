@@ -24,3 +24,13 @@ volume_db = -80.0
 stream = ExtResource( 4 )
 volume_db = -8.0
 bus = "RandomPitch"
+
+[node name="CanvasLayer" type="CanvasLayer" parent="."]
+
+[node name="ColorRect" type="ColorRect" parent="CanvasLayer"]
+modulate = Color( 1, 1, 1, 0 )
+margin_right = 1022.0
+margin_bottom = 598.0
+color = Color( 0, 0, 0, 1 )
+
+[node name="FadeTween" type="Tween" parent="."]

@@ -73,17 +73,20 @@ func sphere_collided(disk):
 	$Sphere.destroy_animation()
 	$Tween.interpolate_property(Game, "speed", Game.speed, 0.0, .9, Tween.TRANS_QUAD, Tween.EASE_IN_OUT)
 	$Tween.start()
-
 	yield(get_tree().create_timer(1.2), "timeout")
+	Game.fade_out_and_in()
+	yield(Game, "faded_out")
+
 	Game.disk_number = killer_disk_number
 	Game.current_disk = null
 	
-	yield(Fade.fade_out(0.3), "finished")
+
 	Game.set_speedup_active(false)
 	Game.set_next_tunnel_color_without_transition = true
 	get_tree().change_scene("res://Logic/Level.tscn")
-	Fade.fade_in(0.2)
-	
+	yield(Game, "faded_back_in")
+
+
 func sphere_passed(disk):
 	Game.current_tries = 0
 	if disk.number != 1:
